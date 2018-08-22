@@ -13,10 +13,12 @@ class ChildrenController < ApplicationController
   end
 
   def create
-    @child = Child.new(child_params)
+    attrs = child_params.merge(parent: @parent)
+    @child = Child.new(attrs)
+
     respond_to do |format|
       if @child.save
-        format.html { redirect_to @child, notice: 'Child successfully created.' }
+        format.html { redirect_to @parent, notice: 'Child successfully created.' }
         format.json { render :show, status: :created, location: @child }
       else
         format.html { render :new }
@@ -33,5 +35,9 @@ class ChildrenController < ApplicationController
 
   def set_child
     @child = Child.find(params[:id])
+  end
+
+  def child_params
+    params.require(:child).permit(:last_name, :first_name, :age)
   end
 end
