@@ -21,14 +21,17 @@
 </p>
 
 <% @parent.children.each_with_index do |child, i| %>
+	<hr />
 	<div>
 		<p>Child #<%= i+1 %></p>
 		<p>Child's First Name: <%= child.first_name %></p>
 		<p>Child's Last Name: <%= child.last_name %></p>
+		<%= link_to 'Sell Days', parent_path %>
 	</div>
 <% end %>
 
-<%= link_to 'Add Child', new_parent_child_path(@parent) %>
-
+<br />
+<br />
+<%= link_to 'Add Child', new_parent_child_path(@parent) %> |
 <%= link_to 'Edit', edit_parent_path(@parent) %> |
 <%= link_to 'Back', parents_path %>
