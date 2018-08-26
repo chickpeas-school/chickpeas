@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_21_041819) do
+ActiveRecord::Schema.define(version: 2018_08_24_040454) do
+
+  create_table "buyer_sellers", force: :cascade do |t|
+    t.integer "child_id"
+    t.integer "saleable_day_id"
+    t.boolean "is_buyer"
+    t.boolean "is_seller"
+    t.index ["child_id"], name: "index_buyer_sellers_on_child_id"
+    t.index ["saleable_day_id"], name: "index_buyer_sellers_on_saleable_day_id"
+  end
 
   create_table "children", force: :cascade do |t|
     t.integer "parent_id"
@@ -27,6 +36,12 @@ ActiveRecord::Schema.define(version: 2018_08_21_041819) do
     t.string "first_name"
     t.string "last_name"
     t.string "years"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "saleable_days", force: :cascade do |t|
+    t.datetime "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

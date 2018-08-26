@@ -27,6 +27,7 @@
 		<p>Child's First Name: <%= child.first_name %></p>
 		<p>Child's Last Name: <%= child.last_name %></p>
 		<%= link_to 'Sell Days', parent_path %>
+		<%= link_to 'View', parent_child_path(@parent, child) %>
 	</div>
 <% end %>
 
