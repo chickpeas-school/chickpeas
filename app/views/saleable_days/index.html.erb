@@ -1,0 +1,27 @@
+<h3>Days for Sale</h3>
+<table class="table">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Month</th>
+			<th scope="col">Day</th>
+			<th scope="col">Child's Name</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @days.each_with_index do |day, i| %>
+			<tr>
+				<th scope="row"><%= i+1 %></th>
+				<td><%= day.date.month %></td>
+				<td><%= day.date.day %></td>
+				<td>
+					<%= link_to parent_child_path(day.seller.parent, day.seller) do %>
+						<%= day.children.seller.first_name %> <%= day.children.seller.last_name %>
+					<% end %>
+				</td>
+				<td><button type="button" class="btn btn-primary">Buy</button></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
