@@ -10,6 +10,14 @@ class SaleableDay < ApplicationRecord
     end
   end
 
+  def self.for_sale
+    all.select { |day| day.for_sale? }
+  end
+
+  def for_sale?
+    !buyer_sellers.map(&:is_buyer).include?(true)
+  end
+
   def seller
     children.seller
   end

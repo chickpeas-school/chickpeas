@@ -20,7 +20,11 @@
 						<%= day.children.seller.first_name %> <%= day.children.seller.last_name %>
 					<% end %>
 				</td>
-				<td><button type="button" class="btn btn-primary">Buy</button></td>
+				<td>
+					<%= link_to edit_saleable_day_path(day) do %>
+						<button type="button" class="btn btn-primary">Buy</button>
+					<% end %>
+				</td>
 			</tr>
 		<% end %>
 	</tbody>

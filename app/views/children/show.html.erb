@@ -2,7 +2,7 @@
 
 <% if @child.has_days_sold? %>
 	<p><b>Days on Sale</b></p>
-	<% @child.saleable_days.days_sold.each do |d| %>
+	<% @child.saleable_days.select(&:for_sale?).each do |d| %>
 		<p>Date: <%= d.date.to_date %></p>
 	<% end %>
 <% end %>

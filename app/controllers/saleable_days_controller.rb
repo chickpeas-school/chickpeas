@@ -1,12 +1,41 @@
 class SaleableDaysController < ApplicationController
 
   def index
-    @days = SaleableDay.all
+    @days = SaleableDay.for_sale
   end
 
   def new
     @day = SaleableDay.new
     @child = Child.find(params[:child_id])
+  end
+
+  def edit
+    @day = SaleableDay.find(params[:id])
+    @children = Child.all.reject { |ch| ch.id == @day.seller.id }
+  end
+
+  def update
+    @day = SaleableDay.find(params[:id])
+    @child = Child.find(params[:saleable_day][:child_id])
+
+    buyer_params = {
+      child_id: @child.id,
+      saleable_day_id: @day.id,
+      is_seller: false,
+      is_buyer: true
+    }
+
+    @bs = BuyerSeller.new(buyer_params)
+
+    respond_to do |format|
+      if @bs.save
+        format.html { redirect_to @child.parent, notice: 'Day has been bought' }
+        format.json { render :show, status: :created, location: @child.parent }
+      else
+        format.html { render :edit }
+        format.json { render json: @bs.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def create
@@ -16,14 +45,14 @@ class SaleableDaysController < ApplicationController
       if @day.save
         @child = Child.find(params[:saleable_day][:child_id])
 
-        buy_sell_params = {
+        seller_params = {
           child_id: @child.id,
           saleable_day_id: @day.id,
           is_seller: true,
           is_buyer: false
         }
 
-        @bs = BuyerSeller.new(buy_sell_params)
+        @bs = BuyerSeller.new(seller_params)
 
         if @bs.save
           format.html { redirect_to @child.parent, notice: 'Day was successfully recorded for sale' }

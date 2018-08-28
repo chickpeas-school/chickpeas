@@ -1,0 +1,22 @@
+<%= form_with model: @day, local: true do |form| %>
+  <% if @day.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@day.errors.count, "error") %> prohibited this day from being saved:</h2>
+
+      <ul>
+      <% @day.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+	<% end %>
+
+	<%= form.label 'Choose a child' %>
+	<%= form.select :child_id do %>
+		<% @children.each do |child| %>
+			<%= content_tag :option, "#{child.first_name} #{child.last_name}", value: child.id %>
+		<% end %>
+	<% end %>
+
+	<%= form.submit %>
+<% end %>
