@@ -26,7 +26,7 @@
 		<p>Child #<%= i+1 %></p>
 		<p>Child's First Name: <%= child.first_name %></p>
 		<p>Child's Last Name: <%= child.last_name %></p>
-		<%= link_to 'Sell Days', parent_path %>
+		<%= link_to 'Sell Days', new_saleable_day_path(child_id: child) %>
 		<%= link_to 'View', parent_child_path(@parent, child) %>
 	</div>
 <% end %>
