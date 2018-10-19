@@ -1,28 +1,10 @@
 class SaleableDay < ApplicationRecord
-  has_many :buyer_sellers
-  has_many :children, through: :buyer_sellers do
-    def seller
-      where("buyer_sellers.is_seller = ?", true).first
-    end
+  belongs_to :buyer, class_name: "Parent", optional: true
+  belongs_to :seller, class_name: "Parent"
 
-    def buyer
-      where("buyer_sellers.is_buyer = ?", true).first
-    end
-  end
+  scope :for_sale, -> { where(buyer: nil) }
+  scope :sold, -> { where.not(buyer: nil) }
 
-  def self.for_sale
-    all.select { |day| day.for_sale? }
-  end
-
-  def for_sale?
-    !buyer_sellers.map(&:is_buyer).include?(true)
-  end
-
-  def seller
-    children.seller
-  end
-
-  def buyer
-    children.buyer
-  end
+  # TODO
+  # has_one :child
 end

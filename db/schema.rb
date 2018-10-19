@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_16_040416) do
+ActiveRecord::Schema.define(version: 2018_10_19_035439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,15 +20,6 @@ ActiveRecord::Schema.define(version: 2018_10_16_040416) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "buyer_sellers", force: :cascade do |t|
-    t.integer "child_id"
-    t.integer "saleable_day_id"
-    t.boolean "is_buyer"
-    t.boolean "is_seller"
-    t.index ["child_id"], name: "index_buyer_sellers_on_child_id"
-    t.index ["saleable_day_id"], name: "index_buyer_sellers_on_saleable_day_id"
   end
 
   create_table "children", force: :cascade do |t|
@@ -54,6 +45,10 @@ ActiveRecord::Schema.define(version: 2018_10_16_040416) do
     t.datetime "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "buyer_id"
+    t.bigint "seller_id"
+    t.index ["buyer_id"], name: "index_saleable_days_on_buyer_id"
+    t.index ["seller_id"], name: "index_saleable_days_on_seller_id"
   end
 
 end
