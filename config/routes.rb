@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :announcements
   resources :saleable_days, path: 'days'
 
   resources :parents do
@@ -6,5 +7,5 @@ Rails.application.routes.draw do
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #
-  root to: "saleable_days#index"
+  root to: "home#show"
 end
