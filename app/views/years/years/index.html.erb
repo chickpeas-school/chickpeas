@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Years</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Is Current Year?</th>
+      <th colspan="5"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @years.each do |year| %>
+      <tr>
+        <td><%= year.value %></td>
+        <td><%= year.current_year %></td>
+				<td><%= link_to 'Add Parent', new_years_year_parent_path(year) %></td>
+        <td><%= link_to 'Show', years_year_path(year) %></td>
+        <td><%= link_to 'Edit', edit_years_year_path(year) %></td>
+        <td><%= link_to 'Destroy', years_year_path(year), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Year', new_years_year_path %>

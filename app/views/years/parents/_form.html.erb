@@ -1,0 +1,10 @@
+<%= form_tag(years_year_parents_path, method: "post", local: true) do %>
+	<% parent_options = @parents.map { |parent| ["#{parent.first_name} #{parent.last_name}", parent.id] } %>
+	<div class="field">
+		<%= select_tag(:parent_id, options_for_select(parent_options)) %>
+	</div>
+
+	<div class="actions">
+		<%= submit_tag %>
+	</div>
+<% end %>

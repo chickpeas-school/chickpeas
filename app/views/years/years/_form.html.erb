@@ -1,0 +1,27 @@
+<%= form_tag('/years', method: 'post', local: true) do %>
+  <% if year.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(year.errors.count, "error") %> prohibited this year from being saved:</h2>
+
+      <ul>
+      <% year.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= label_tag :year_value %>
+    <%= number_field_tag :value, in: 2015..2030, step: 1 %>
+  </div>
+
+  <div class="field">
+    <%= label_tag 'Is Current Year?' %>
+		<%= check_box_tag :current_year %>
+	</div>
+
+	<div class="actions">
+		<%= submit_tag %>
+	</div>
+<% end %>
