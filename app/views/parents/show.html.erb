@@ -17,13 +17,14 @@
 
 <p>
   <strong>Years:</strong>
-  <%= @parent.years %>
+  <%= @parent.years.map(&:value).join(", ") %>
 </p>
 
 <% @parent.children.each_with_index do |child, i| %>
+	<% child_number = i+1 %>
 	<hr />
 	<div>
-		<p>Child #<%= i+1 %></p>
+		<p>Child #<%= child_number.to_s %></p>
 		<p>Child's First Name: <%= child.first_name %></p>
 		<p>Child's Last Name: <%= child.last_name %></p>
 		<%= link_to 'Sell Days', new_saleable_day_path(child_id: child) %>

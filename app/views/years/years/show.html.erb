@@ -10,5 +10,11 @@
   <%= @year.current_year %>
 </p>
 
-<%= link_to 'Edit', edit_year_path(@year) %> |
-<%= link_to 'Back', years_path %>
+<hr />
+<p><strong>Parents</strong></p>
+<% @year.parents.each do |parent| %>
+	<p><%= link_to parent.name, parent_path(parent) %></p>
+<% end %>
+
+<%= link_to 'Edit', edit_years_year_path(@year) %> |
+<%= link_to 'Back', years_years_path %>

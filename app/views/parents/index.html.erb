@@ -19,7 +19,7 @@
         <td><%= parent.email %></td>
         <td><%= parent.first_name %></td>
         <td><%= parent.last_name %></td>
-        <td><%= parent.years %></td>
+				<td><%= parent.years.map { |y| y.value } %></td>
         <td><%= link_to 'Show', parent %></td>
         <td><%= link_to 'Edit', edit_parent_path(parent) %></td>
       </tr>
