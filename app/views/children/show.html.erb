@@ -1,15 +1,15 @@
-<p>Name: <%= @child.first_name %> <%= @child.last_name %></p>
+<p>Name: <%= @child.name %></p>
 
-<% if @child.has_days_sold? %>
+<% if @child.days_for_sale? %>
 	<p><b>Days on Sale</b></p>
-	<% @child.saleable_days.select(&:for_sale?).each do |d| %>
+	<% @child.days_for_sale.each do |d| %>
 		<p>Date: <%= d.date.to_date %></p>
 	<% end %>
 <% end %>
 
-<% if @child.has_days_bought? %>
+<% if @child.days_bought? %>
 	<p><b>Days Bought</b></p>
-	<% @child.saleable_days.days_bought.each do |d| %>
+	<% @child.days_bought.each do |d| %>
 		<p>Date: <%= d.date.to_date %></p>
 	<% end %>
 <% end %>

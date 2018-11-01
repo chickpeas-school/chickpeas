@@ -1,21 +1,23 @@
 class Child < ApplicationRecord
   belongs_to :parent
-  has_many :buyer_sellers
-  has_many :saleable_days, through: :buyer_sellers do
-    def days_sold
-      where("buyer_sellers.is_seller = ?", true)
-    end
 
-    def days_bought
-      where("buyer_sellers.is_buyer = ?", true)
-    end
+  def name
+    "#{first_name} #{last_name}"
   end
 
-  def has_days_sold?
-    saleable_days.days_sold.count > 0
+  def days_for_sale?
+    !days_for_sale.empty?
   end
 
-  def has_days_bought?
-    saleable_days.days_bought.count > 0
+  def days_for_sale
+    @days_for_sale ||= SaleableDay.where(seller: self)
+  end
+
+  def days_bought?
+    !days_bought.empty?
+  end
+
+  def days_bought
+    @days_bought ||= SaleableDay.where(buyer: self)
   end
 end

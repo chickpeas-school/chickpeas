@@ -2,7 +2,6 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th scope="col">#</th>
 			<th scope="col">Month</th>
 			<th scope="col">Day</th>
 			<th scope="col">Child's Name</th>
@@ -10,14 +9,13 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% @days.each_with_index do |day, i| %>
+		<% @days.each do |day| %>
 			<tr>
-				<th scope="row"><%= i+1 %></th>
 				<td><%= day.date.month %></td>
 				<td><%= day.date.day %></td>
 				<td>
 					<%= link_to parent_child_path(day.seller.parent, day.seller) do %>
-						<%= day.children.seller.first_name %> <%= day.children.seller.last_name %>
+						<%= day.seller.name %>
 					<% end %>
 				</td>
 				<td>

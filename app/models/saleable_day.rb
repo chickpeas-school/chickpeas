@@ -1,6 +1,6 @@
 class SaleableDay < ApplicationRecord
-  belongs_to :buyer, class_name: "Parent", optional: true
-  belongs_to :seller, class_name: "Parent"
+  belongs_to :buyer, class_name: "Child", optional: true
+  belongs_to :seller, class_name: "Child"
 
   scope :for_sale, -> { where(buyer: nil) }
   scope :sold, -> { where.not(buyer: nil) }
