@@ -1,0 +1,10 @@
+<%= form_tag(year_children_path, method: "post", local: true) do %>
+	<% child_options = @children.map { |child| ["#{child.first_name} #{child.last_name}", child.id] } %>
+	<div class="field">
+		<%= select_tag(:child_id, options_for_select(child_options)) %>
+	</div>
+
+	<div class="actions">
+		<%= submit_tag %>
+	</div>
+<% end %>

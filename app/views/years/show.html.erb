@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @year.value %>
+</p>
+
+<p>
+  <strong>Is Current Year?</strong>
+  <%= @year.current_year %>
+</p>
+
+<hr />
+<p><strong>Children</strong></p>
+<% @year.children.each do |child| %>
+	<p><%= link_to child.name, child_path(child) %></p>
+<% end %>
+
+<%= link_to 'Edit', edit_year_path(@year) %> |
+<%= link_to 'Back', years_path %>

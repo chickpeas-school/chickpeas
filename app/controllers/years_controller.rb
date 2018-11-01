@@ -1,4 +1,4 @@
-class Years::YearsController < ApplicationController
+class YearsController < ApplicationController
   before_action :set_year, only: [:show, :edit, :update, :destroy]
 
   # GET /years

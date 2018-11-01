@@ -8,7 +8,7 @@
 			<th scope="col">Email</th>
 			<th scope="col">First name</th>
 			<th scope="col">Last name</th>
-			<th scope="col">Years</th>
+			<th scope="col">Children</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -19,7 +19,7 @@
         <td><%= parent.email %></td>
         <td><%= parent.first_name %></td>
         <td><%= parent.last_name %></td>
-				<td><%= parent.years.map { |y| y.value } %></td>
+				<td><%= parent.children.map { |c| c.name }.join(", ") %></td>
         <td><%= link_to 'Show', parent %></td>
         <td><%= link_to 'Edit', edit_parent_path(parent) %></td>
       </tr>

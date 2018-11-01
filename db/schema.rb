@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_23_042743) do
+ActiveRecord::Schema.define(version: 2018_11_01_022636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,13 @@ ActiveRecord::Schema.define(version: 2018_10_23_042743) do
     t.index ["parent_id"], name: "index_children_on_parent_id"
   end
 
+  create_table "children_years", id: false, force: :cascade do |t|
+    t.bigint "child_id"
+    t.bigint "year_id"
+    t.index ["child_id"], name: "index_children_years_on_child_id"
+    t.index ["year_id"], name: "index_children_years_on_year_id"
+  end
+
   create_table "parents", force: :cascade do |t|
     t.string "email"
     t.string "first_name"
@@ -39,13 +46,6 @@ ActiveRecord::Schema.define(version: 2018_10_23_042743) do
     t.string "years"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "parents_years", id: false, force: :cascade do |t|
-    t.bigint "parent_id"
-    t.bigint "year_id"
-    t.index ["parent_id"], name: "index_parents_years_on_parent_id"
-    t.index ["year_id"], name: "index_parents_years_on_year_id"
   end
 
   create_table "saleable_days", force: :cascade do |t|

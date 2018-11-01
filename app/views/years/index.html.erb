@@ -16,10 +16,10 @@
       <tr>
         <td><%= year.value %></td>
         <td><%= year.current_year %></td>
-				<td><%= link_to 'Add Parent', new_years_year_parent_path(year) %></td>
-        <td><%= link_to 'Show', years_year_path(year) %></td>
-        <td><%= link_to 'Edit', edit_years_year_path(year) %></td>
-        <td><%= link_to 'Destroy', years_year_path(year), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				<td><%= link_to 'Add Child', new_year_child_path(year) %></td>
+        <td><%= link_to 'Show', year_path(year) %></td>
+        <td><%= link_to 'Edit', edit_year_path(year) %></td>
+        <td><%= link_to 'Destroy', year_path(year), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -27,4 +27,4 @@
 
 <br>
 
-<%= link_to 'New Year', new_years_year_path %>
+<%= link_to 'New Year', new_year_path %>
