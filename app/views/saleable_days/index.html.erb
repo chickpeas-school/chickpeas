@@ -14,7 +14,7 @@
 				<td><%= day.date.month %></td>
 				<td><%= day.date.day %></td>
 				<td>
-					<%= link_to parent_child_path(day.seller.parent, day.seller) do %>
+					<%= link_to child_path(day.seller) do %>
 						<%= day.seller.name %>
 					<% end %>
 				</td>

@@ -17,20 +17,12 @@ class SaleableDaysController < ApplicationController
   def update
     @day = SaleableDay.find(params[:id])
     @child = Child.find(params[:saleable_day][:child_id])
-
-    buyer_params = {
-      child_id: @child.id,
-      saleable_day_id: @day.id,
-      is_seller: false,
-      is_buyer: true
-    }
-
-    @bs = BuyerSeller.new(buyer_params)
+    @day.buyer = @child
 
     respond_to do |format|
-      if @bs.save
-        format.html { redirect_to @child.parent, notice: 'Day has been bought' }
-        format.json { render :show, status: :created, location: @child.parent }
+      if @day.save
+        format.html { redirect_to saleable_days_path, notice: 'Day has been bought' }
+        format.json { render :show, status: :created, location: saleable_days_path }
       else
         format.html { render :edit }
         format.json { render json: @bs.errors, status: :unprocessable_entity }
