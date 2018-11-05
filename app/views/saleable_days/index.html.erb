@@ -1,4 +1,19 @@
-<h3>Days for Sale</h3>
+<h3>Calendar</h3>
+
+<%= month_calendar events: @days do |date, days| %>
+	<%= date.day %>
+
+	<% days.each do |day| %>
+		<div>
+			<%= link_to day.seller.name, edit_saleable_day_path(day) %>
+		</div>
+	<% end %>
+<% end %>
+
+<br />
+<br />
+<br />
+<h3>List of Days</h3>
 <table class="table">
 	<thead>
 		<tr>
@@ -11,8 +26,8 @@
 	<tbody>
 		<% @days.each do |day| %>
 			<tr>
-				<td><%= day.date.month %></td>
-				<td><%= day.date.day %></td>
+				<td><%= day.date.strftime("%B") %></td>
+				<td><%= day.date.day %><%= day.date.day.ordinal %></td>
 				<td>
 					<%= link_to child_path(day.seller) do %>
 						<%= day.seller.name %>

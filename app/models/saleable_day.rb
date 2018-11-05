@@ -7,4 +7,8 @@ class SaleableDay < ApplicationRecord
 
   # TODO
   # has_one :child
+  #
+  def start_time
+    date
+  end
 end

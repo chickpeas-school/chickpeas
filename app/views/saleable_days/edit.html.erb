@@ -1,3 +1,4 @@
+<h4>Buy Day - <%= @day.date.strftime("%B") %> <%= @day.date.day %><%= @day.date.day.ordinal %></h4>
 <%= form_with model: @day, local: true do |form| %>
   <% if @day.errors.any? %>
     <div id="error_explanation">
@@ -11,12 +12,11 @@
     </div>
 	<% end %>
 
-	<%= form.label 'Choose a child' %>
-	<%= form.select :child_id do %>
-		<% @children.each do |child| %>
-			<%= content_tag :option, "#{child.first_name} #{child.last_name}", value: child.id %>
-		<% end %>
-	<% end %>
+	<div class="form-group">
+		<% children_content_tags = @children.map { |c| [c.name, c.id] } %>
+		<%= form.label 'Choose the Child/Buyer' %>
+		<%= form.select :child_id, children_content_tags, {}, class: "form-control" %>
+	</div>
 
-	<%= form.submit %>
+	<%= form.submit "Buy Day", class: "btn btn-primary" %>
 <% end %>
