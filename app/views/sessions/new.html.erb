@@ -1,0 +1,7 @@
+<h2>Login</h2>
+
+<%= form_tag("/sessions", method: "post") do %>
+	<%= label_tag(:parent_email, "Email Address") %>
+	<%= text_field_tag(:parent_email) %>
+	<%= submit_tag("Login") %>
+<% end %>

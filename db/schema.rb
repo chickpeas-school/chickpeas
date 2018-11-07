@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_01_022636) do
+ActiveRecord::Schema.define(version: 2018_11_06_060307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,15 @@ ActiveRecord::Schema.define(version: 2018_11_01_022636) do
     t.bigint "seller_id"
     t.index ["buyer_id"], name: "index_saleable_days_on_buyer_id"
     t.index ["seller_id"], name: "index_saleable_days_on_seller_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.string "session_id", null: false
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
+    t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
   create_table "years", force: :cascade do |t|

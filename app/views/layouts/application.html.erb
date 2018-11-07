@@ -34,6 +34,11 @@
 						<li class="nav-item">
 							<%= link_to "Years", years_path, class: "nav-link" %>
 						</li>
+						<% if current_user %>
+							<li class="nav-item">
+								<%= link_to current_user.name, parent_path(current_user), class: "nav-link" %>
+							</li>
+						<% end %>
 					</ul>
 				</div>
 			</nav>
