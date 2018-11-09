@@ -7,52 +7,56 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+	</head>
 
 	<body>
-		<div class="container">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<a class="navbar-brand" href="/">Chickpeas App</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="/">Chickpeas App</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav mr-auto">
-						<li class="nav-item">
-							<%= link_to root_path, class: "nav-link"  do %>
-								Home
-								<span class="sr-only">(current)</span>
-							<% end %>
-						</li>
-						<li class="nav-item">
-							<%= link_to "Days on Sale", saleable_days_path, class: "nav-link" %>
-						</li>
-						<% if logged_in? %>
-							<% if admin_user? %>
-								<li class="nav-item">
-									<%= link_to "Parents", parents_path, class: "nav-link" %>
-								</li>
-								<li class="nav-item">
-									<%= link_to "Years", years_path, class: "nav-link" %>
-								</li>
-							<% end %>
-							<li class="nav-item">
-								<%= link_to current_user.name, parent_path(current_user), class: "nav-link" %>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<%= link_to root_path, class: "nav-link"  do %>
+							Home
+							<span class="sr-only">(current)</span>
+						<% end %>
+					</li>
+					<li class="nav-item">
+						<%= link_to "Days on Sale", saleable_days_path, class: "nav-link" %>
+					</li>
+				</ul>
+				<ul class="navbar-nav ml-auto">
+					<% if logged_in? %>
+						<% if admin_user? %>
+							<li class="nav-item mr-auto">
+								<%= link_to "Parents", parents_path, class: "nav-link" %>
 							</li>
-							<li class="nav-item">
-								<%= link_to "Log Out", logout_path, method: :delete, class: "nav-link" %>
-							</li>
-						<% else %>
-							<li class="nav-item">
-								<%= link_to "Log In", login_path, class: "nav-link" %>
+							<li class="nav-item mr-auto">
+								<%= link_to "Years", years_path, class: "nav-link" %>
 							</li>
 						<% end %>
-					</ul>
-				</div>
-			</nav>
+						<li class="nav-item mr-auto">
+							<%= link_to current_user.name, parent_path(current_user), class: "nav-link" %>
+						</li>
+						<li class="nav-item mr-auto">
+							<%= link_to "Log Out", logout_path, method: :delete, class: "nav-link" %>
+						</li>
+					<% else %>
+						<li class="nav-item mr-auto">
+							<%= link_to "Log In", login_path, class: "nav-link" %>
+						</li>
+					<% end %>
+				</ul>
+			</div>
+		</nav>
 
-			<%= yield %>
+		<div class="container">
+			<div style="padding-top:50px;">
+				<%= yield %>
+			</div>
 		</div>
 	</body>
 </html>
