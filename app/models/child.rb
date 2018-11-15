@@ -1,6 +1,6 @@
 class Child < ApplicationRecord
   has_and_belongs_to_many :years
-  belongs_to :parent
+  has_and_belongs_to_many :parents
 
   has_many :days_for_sale, class_name: "SaleableDay", foreign_key: "seller_id"
   has_many :days_bought, class_name: "SaleableDay", foreign_key: "buyer_id"

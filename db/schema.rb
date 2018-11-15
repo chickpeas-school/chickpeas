@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_07_152645) do
+ActiveRecord::Schema.define(version: 2018_11_15_033242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,13 +23,18 @@ ActiveRecord::Schema.define(version: 2018_11_07_152645) do
   end
 
   create_table "children", force: :cascade do |t|
-    t.integer "parent_id"
     t.string "first_name"
     t.string "last_name"
     t.integer "age"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["parent_id"], name: "index_children_on_parent_id"
+  end
+
+  create_table "children_parents", id: false, force: :cascade do |t|
+    t.bigint "child_id"
+    t.bigint "parent_id"
+    t.index ["child_id"], name: "index_children_parents_on_child_id"
+    t.index ["parent_id"], name: "index_children_parents_on_parent_id"
   end
 
   create_table "children_years", id: false, force: :cascade do |t|

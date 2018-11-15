@@ -7,10 +7,12 @@ class Parents::ChildrenController < ApplicationController
   end
 
   def create
-    @child = Child.new(child_params.merge(parent: @parent))
+    @child = Child.new(child_params)
 
     respond_to do |format|
       if @child.save
+        @parent.children << @child
+
         format.html { redirect_to @parent, notice: 'Child successfully created.' }
         format.json { render :show, status: :created, location: @child }
       else

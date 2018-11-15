@@ -1,5 +1,5 @@
 class Parent < ApplicationRecord
-  has_many :children
+  has_and_belongs_to_many :children
 
   def name
     "#{first_name} #{last_name}"

@@ -1,7 +1,8 @@
 class SaleableDaysController < ApplicationController
+  before_action :logged_in?, only: [:edit, :create, :new, :update]
 
   def index
-    @days = SaleableDay.for_sale
+    @days = SaleableDay.all
   end
 
   def new
@@ -11,7 +12,7 @@ class SaleableDaysController < ApplicationController
 
   def edit
     @day = SaleableDay.find(params[:id])
-    @children = Child.all.reject { |ch| ch.id == @day.seller.id }
+    @children = current_user.children.all.reject { |ch| ch.id == @day.seller.id }
   end
 
   def update
@@ -50,5 +51,9 @@ class SaleableDaysController < ApplicationController
 
   def day_params
     params.require(:saleable_day).permit(:date)
+  end
+
+  def logged_in?
+    redirect_to login_path unless super
   end
 end

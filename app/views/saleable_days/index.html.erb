@@ -4,9 +4,15 @@
 	<%= date.day %>
 
 	<% days.each do |day| %>
-		<div>
-			<%= link_to day.seller.name, edit_saleable_day_path(day) %>
-		</div>
+		<% if day.sold? %>
+			<div>
+				<small><%= link_to "#{day.seller.name} (SOLD)", "", class: "disabled" %></small>
+			</div>
+		<% else %>
+			<div>
+				<%= link_to day.seller.name, edit_saleable_day_path(day) %>
+			</div>
+		<% end %>
 	<% end %>
 <% end %>
 
@@ -28,14 +34,14 @@
 			<tr>
 				<td><%= day.date.strftime("%B") %></td>
 				<td><%= day.date.day %><%= day.date.day.ordinal %></td>
+				<td><%= day.seller.name %></td>
 				<td>
-					<%= link_to child_path(day.seller) do %>
-						<%= day.seller.name %>
-					<% end %>
-				</td>
-				<td>
-					<%= link_to edit_saleable_day_path(day) do %>
-						<button type="button" class="btn btn-primary">Buy</button>
+					<% if day.sold? %>
+						<button type="button" class="btn btn-primary disabled">Sold</button>
+					<% else %>
+						<%= link_to edit_saleable_day_path(day) do %>
+							<button type="button" class="btn btn-primary">Buy</button>
+						<% end %>
 					<% end %>
 				</td>
 			</tr>

@@ -11,4 +11,8 @@ class SaleableDay < ApplicationRecord
   def start_time
     date
   end
+
+  def sold?
+    !buyer.nil?
+  end
 end

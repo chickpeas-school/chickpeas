@@ -15,20 +15,28 @@
   <%= @parent.last_name %>
 </p>
 
-<% @parent.children.each_with_index do |child, i| %>
-	<% child_number = i+1 %>
-	<hr />
-	<div>
-		<p>Child #<%= child_number.to_s %></p>
-		<p>Child's First Name: <%= child.first_name %></p>
-		<p>Child's Last Name: <%= child.last_name %></p>
-		<%= link_to 'Sell Days', new_saleable_day_path(child_id: child) %>
-		<%= link_to 'View', child_path(child) %>
+<div style="padding-top:20px;padding-bottom:20px;"></div>
+<% if @parent.children.exists? %>
+	<h3>Children</h3>
+	<div class="row">
+		<% @parent.children.each_with_index do |child, i| %>
+			<div class="col-sm-4">
+				<div class="card text-center">
+					<div class="card-body">
+						<h5 class="card-title"><%= child.name %></h5>
+						<%= link_to 'Sell Days', new_saleable_day_path(child_id: child), class: "card-link btn btn-light" %>
+						<%= link_to 'View Child', child_path(child), class: "card-link btn btn-primary" %>
+					</div>
+				</div>
+			</div>
+		<% end %>
 	</div>
 <% end %>
 
-<br />
-<br />
-<%= link_to 'Add Child', new_parent_child_path(@parent) %> |
-<%= link_to 'Edit', edit_parent_path(@parent) %> |
-<%= link_to 'Back', parents_path %>
+<% if current_user && admin_user? %>
+	<br />
+	<br />
+	<%= link_to 'Add Child', new_parent_child_path(@parent) %> |
+	<%= link_to 'Edit', edit_parent_path(@parent) %> |
+	<%= link_to 'Back', parents_path %>
+<% end %>
