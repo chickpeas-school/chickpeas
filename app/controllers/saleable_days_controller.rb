@@ -38,7 +38,7 @@ class SaleableDaysController < ApplicationController
 
     respond_to do |format|
       if @day.save
-        format.html { redirect_to @child.parent, notice: 'Day was successfully recorded for sale' }
+        format.html { redirect_to saleable_days_path, notice: 'Day was successfully recorded for sale' }
         format.json { render :show, status: :created, location: @child.parent }
       else
         format.html { render :new }

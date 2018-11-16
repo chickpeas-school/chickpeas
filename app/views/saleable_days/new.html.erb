@@ -20,5 +20,6 @@
 
 	<%= form.hidden_field :child_id, value: @child.id %>
 
-	<%= form.submit %>
+	<%= form.submit "Sell Day", class: "btn btn-primary" %>
+	<%= link_to "Back", :back, class: "btn btn-secondary" %>
 <% end %>

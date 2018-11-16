@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_15_033242) do
+ActiveRecord::Schema.define(version: 2018_11_16_041618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,11 +23,12 @@ ActiveRecord::Schema.define(version: 2018_11_15_033242) do
   end
 
   create_table "children", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
     t.integer "age"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "dob"
+    t.string "days"
   end
 
   create_table "children_parents", id: false, force: :cascade do |t|
@@ -46,12 +47,14 @@ ActiveRecord::Schema.define(version: 2018_11_15_033242) do
 
   create_table "parents", force: :cascade do |t|
     t.string "email"
-    t.string "first_name"
-    t.string "last_name"
     t.string "years"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_admin"
+    t.string "name"
+    t.string "phone_number"
+    t.string "job"
+    t.string "address"
   end
 
   create_table "saleable_days", force: :cascade do |t|
