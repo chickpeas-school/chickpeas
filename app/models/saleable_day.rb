@@ -5,6 +5,8 @@ class SaleableDay < ApplicationRecord
   scope :for_sale, -> { where(buyer: nil) }
   scope :sold, -> { where.not(buyer: nil) }
 
+  self.per_page = 10
+
   # TODO
   # has_one :child
   #

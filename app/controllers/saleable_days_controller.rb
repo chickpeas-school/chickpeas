@@ -3,6 +3,7 @@ class SaleableDaysController < ApplicationController
 
   def index
     @days = SaleableDay.all
+    @list_days = SaleableDay.paginate(page: params[:page])
   end
 
   def new

@@ -28,6 +28,9 @@
 <br />
 <br />
 <h3>List of Days</h3>
+<div class="digg_pagination">
+	<%= will_paginate @list_days %>
+</div>
 <table class="table">
 	<thead>
 		<tr>
@@ -38,7 +41,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% @days.each do |day| %>
+		<% @list_days.each do |day| %>
 			<tr>
 				<td><%= day.date.strftime("%B") %></td>
 				<td><%= day.date.day %><%= day.date.day.ordinal %></td>
