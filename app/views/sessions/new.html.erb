@@ -1,4 +1,10 @@
 <%= form_tag("/sessions", method: "post") do %>
+	<% if flash.alert %>
+		<div class="alert alert-danger" role="alert">
+			<%= flash.alert %>
+		</div>
+  <% end %>
+
 	<div class="form-row">
 		<div class="form-group col-md-3">
 			<%= label_tag :parent_email, "Email Address" %>

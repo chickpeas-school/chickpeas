@@ -8,31 +8,39 @@ end
 
 roster_data = JSON.parse(File.read("db/roster.json"))
 
-roster_data.each do |child|
-  c = Child.find_or_create_by(name: child["child"]) do |ch|
-    ch.days = child["days"]
-    ch.dob = child["dob"]
-  end
+roster_data.each do |year, rows|
+  year = Year.find_by!(value: year)
 
-  unless child["parent1"].nil?
-    parent1 = Parent.find_or_create_by(name: child["parent1"]["name"]) do |par|
-      par.email = child["parent1"]["email"]
-      par.phone_number = child["parent1"]["phone"]
-      par.job = child["job"]
-      par.address = child["address"]
+  rows.each do |child|
+    c = Child.find_or_create_by(name: child["child"]) do |ch|
+      ch.days = child["days"]
+      ch.dob = child["dob"]
     end
 
-    c.parents << parent1 unless c.parents.map(&:id).include?(parent1.id)
-  end
-
-  unless child["parent2"].nil?
-    parent2 = Parent.find_or_create_by(name: child["parent2"]["name"]) do |par|
-      par.email = child["parent2"]["email"]
-      par.phone_number = child["parent2"]["phone"]
-      par.job = child["job"]
-      par.address = child["address"]
+    unless year.children.map(&:id).include?(c.id)
+      year.children << c
     end
 
-    c.parents << parent2 unless c.parents.map(&:id).include?(parent2.id)
+    unless child["parent1"].nil?
+      parent1 = Parent.find_or_create_by(name: child["parent1"]["name"]) do |par|
+        par.email = child["parent1"]["email"]
+        par.phone_number = child["parent1"]["phone"]
+        par.job = child["job"]
+        par.address = child["address"]
+      end
+
+      c.parents << parent1 unless c.parents.map(&:id).include?(parent1.id)
+    end
+
+    unless child["parent2"].nil?
+      parent2 = Parent.find_or_create_by(name: child["parent2"]["name"]) do |par|
+        par.email = child["parent2"]["email"]
+        par.phone_number = child["parent2"]["phone"]
+        par.job = child["job"]
+        par.address = child["address"]
+      end
+
+      c.parents << parent2 unless c.parents.map(&:id).include?(parent2.id)
+    end
   end
 end

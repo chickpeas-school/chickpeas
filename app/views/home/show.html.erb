@@ -1,7 +1,9 @@
 <div style="margin-top:40px;">
 	<div class="jumbotron">
 		<h1 class="display-4">Welcome to the Chickpeas Homepage</h1>
-		<p class="lead">Please Login to Buy and Sell Days</p>
+		<% if !logged_in? %>
+			<p class="lead">Please Login to Buy and Sell Days</p>
+		<% end %>
 	</div>
 	<div class="row">
 		<div class="col-sm-10">
