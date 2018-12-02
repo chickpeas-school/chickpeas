@@ -5,28 +5,30 @@
 			<p class="lead">Please Login to Buy and Sell Days</p>
 		<% end %>
 	</div>
-	<div class="row">
-		<div class="col-sm-10">
-			<h3>Announcements</h3>
-		</div>
-		<div class="col-sm-2">
-			<% if logged_in? %>
-				<%= link_to new_announcement_path do %>
-					New Announcement
+	<% if @announcements.present? %>
+		<div class="row">
+			<div class="col-sm-10">
+				<h3>Announcements</h3>
+			</div>
+			<div class="col-sm-2">
+				<% if logged_in? %>
+					<%= link_to new_announcement_path do %>
+						New Announcement
+					<% end %>
 				<% end %>
-			<% end %>
-		</div>
-	</div>
-	<div class="digg_pagination">
-		<%= will_paginate @announcements %>
-	</div>
-	<% @announcements.each do |announcement| %>
-		<div class="card" style="">
-			<div class="card-body">
-				<h5 class="card-title"><%= announcement.title %></h5>
-				<h6 class="card-subtitle mb-2 text-muted">Posted at: <%= announcement.created_at.to_formatted_s(:long) %></h6>
-				<p class="card-text"><%= announcement.body %></p>
 			</div>
 		</div>
+		<div class="digg_pagination">
+			<%= will_paginate @announcements %>
+		</div>
+		<% @announcements.each do |announcement| %>
+			<div class="card" style="">
+				<div class="card-body">
+					<h5 class="card-title"><%= announcement.title %></h5>
+					<h6 class="card-subtitle mb-2 text-muted">Posted at: <%= announcement.created_at.to_formatted_s(:long) %></h6>
+					<p class="card-text"><%= announcement.body %></p>
+				</div>
+			</div>
+		<% end %>
 	<% end %>
 </div>

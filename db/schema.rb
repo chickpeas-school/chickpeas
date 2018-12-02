@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_16_041618) do
+ActiveRecord::Schema.define(version: 2018_12_02_060254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,20 @@ ActiveRecord::Schema.define(version: 2018_11_16_041618) do
     t.bigint "year_id"
     t.index ["child_id"], name: "index_children_years_on_child_id"
     t.index ["year_id"], name: "index_children_years_on_year_id"
+  end
+
+  create_table "mass_messages", force: :cascade do |t|
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "sent"
+  end
+
+  create_table "mass_messages_parents", id: false, force: :cascade do |t|
+    t.bigint "mass_message_id"
+    t.bigint "parent_id"
+    t.index ["mass_message_id"], name: "index_mass_messages_parents_on_mass_message_id"
+    t.index ["parent_id"], name: "index_mass_messages_parents_on_parent_id"
   end
 
   create_table "parents", force: :cascade do |t|

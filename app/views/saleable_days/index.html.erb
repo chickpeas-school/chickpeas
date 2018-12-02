@@ -1,7 +1,7 @@
 <h3>Calendar</h3>
 
 <div class="row justify-content-md-center" style="padding-top:30px;padding-bottom:50px;">
-	<% current_user.children.each do |child| %>
+	<% current_user.current_children.each do |child| %>
 		<div class="col col-lg-4">
 			<%= link_to "Sell Day from #{child.name}", new_saleable_day_path(child_id: child.id), class: "btn btn-primary btn-block" %>
 		</div>
@@ -18,7 +18,11 @@
 			</div>
 		<% else %>
 			<div>
-				<%= link_to day.seller.name, edit_saleable_day_path(day) %>
+				<% if current_user.children.include?(day.seller) %>
+					<a class="disabled"><%= day.seller.name %></a>
+				<% else %>
+					<%= link_to day.seller.name, edit_saleable_day_path(day) %>
+				<% end %>
 			</div>
 		<% end %>
 	<% end %>
@@ -50,8 +54,10 @@
 					<% if day.sold? %>
 						<button type="button" class="btn btn-primary disabled">Sold</button>
 					<% else %>
-						<%= link_to edit_saleable_day_path(day) do %>
-							<button type="button" class="btn btn-primary">Buy</button>
+						<% unless current_user.children.include?(day.seller) %>
+							<%= link_to edit_saleable_day_path(day) do %>
+								<button type="button" class="btn btn-primary">Buy</button>
+							<% end %>
 						<% end %>
 					<% end %>
 				</td>
