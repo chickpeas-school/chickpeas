@@ -1,0 +1,32 @@
+<%= form_with(model: mass_message, local: true) do |form| %>
+  <% if mass_message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(mass_message.errors.count, "error") %> prohibited this parent from being saved:</h2>
+
+      <ul>
+      <% mass_message.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<div class="form-group">
+		<%= form.label :message %>
+		<%= form.text_area :message, class: "form-control" %>
+	</div>
+
+	<div class="form-group">
+		<% parents.each do |parent| %>
+			<div class="form-check">
+				<%= form.check_box :parent_ids, { multiple: true, class: "form-check-input" }, parent.id, false %>
+				<%= form.label :parent_ids, parent.name, class: "form-check-label" %>
+			</div>
+		<% end %>
+	</div>
+
+	<div class="form-group">
+		<%= form.submit "Send Msg", class: "btn btn-primary" %>
+		<%= link_to 'Back', :back, class: "btn btn-secondary" %>
+	</div>
+<% end %>

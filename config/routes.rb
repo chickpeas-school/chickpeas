@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     resources :children, only: [:new, :create, :destroy], controller: "years/children"
   end
 
+  resources :mass_messages, only: [:new, :create, :show]
+
   resources :sessions, only: [:create]
 
   get '/login', to: "sessions#new"

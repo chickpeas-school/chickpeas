@@ -41,6 +41,9 @@
 							</li>
 						<% end %>
 						<li class="nav-item mr-auto">
+							<%= link_to "Emergency Text Msg", new_mass_message_path, class: "nav-link" %>
+						</li>
+						<li class="nav-item mr-auto">
 							<%= link_to current_user.name, parent_path(current_user), class: "nav-link" %>
 						</li>
 						<li class="nav-item mr-auto">

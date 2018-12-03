@@ -10,7 +10,7 @@ class MassMessagesController < ApplicationController
   end
 
   def create
-    parents = Parent.find(params[:parent_ids])
+    parents = Parent.find(parent_ids)
     @mass_message = MassMessage.new(mass_message_params)
     @mass_message.parents = parents
 
@@ -26,6 +26,10 @@ class MassMessagesController < ApplicationController
   end
 
   private
+
+  def parent_ids
+    params[:mass_message][:parent_ids]
+  end
 
   def mass_message_params
     params.require(:mass_message).permit(:message)
