@@ -23,6 +23,9 @@ class SaleableDaysController < ApplicationController
 
     respond_to do |format|
       if @day.save
+
+        SaleableDayMailer.with(day: @day).day_purchased.deliver_later
+
         format.html { redirect_to saleable_days_path, notice: 'Day has been bought' }
         format.json { render :show, status: :created, location: saleable_days_path }
       else
@@ -39,6 +42,9 @@ class SaleableDaysController < ApplicationController
 
     respond_to do |format|
       if @day.save
+
+        SaleableDayMailer.with(day: @day).day_put_on_sale.deliver_later
+
         format.html { redirect_to saleable_days_path, notice: 'Day was successfully recorded for sale' }
         format.json { render :show, status: :created, location: @child.parent }
       else

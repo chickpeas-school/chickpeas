@@ -12,9 +12,9 @@ roster_data.each do |year, rows|
   year = Year.find_by!(value: year)
 
   rows.each do |child|
-    c = Child.find_or_create_by(name: child["child"]) do |ch|
-      ch.days = child["days"]
-      ch.dob = child["dob"]
+    c = Child.find_or_create_by(name: child["child"].strip) do |ch|
+      ch.days = child["days"].strip
+      ch.dob = child["dob"].strip
     end
 
     unless year.children.map(&:id).include?(c.id)
@@ -22,22 +22,22 @@ roster_data.each do |year, rows|
     end
 
     unless child["parent1"].nil?
-      parent1 = Parent.find_or_create_by(name: child["parent1"]["name"]) do |par|
-        par.email = child["parent1"]["email"]
-        par.phone_number = child["parent1"]["phone"]
-        par.job = child["job"]
-        par.address = child["address"]
+      parent1 = Parent.find_or_create_by(name: child["parent1"]["name"].strip) do |par|
+        par.email = child["parent1"]["email"].strip
+        par.phone_number = child["parent1"]["phone"].strip
+        par.job = child["job"].strip
+        par.address = child["address"].strip
       end
 
       c.parents << parent1 unless c.parents.map(&:id).include?(parent1.id)
     end
 
     unless child["parent2"].nil?
-      parent2 = Parent.find_or_create_by(name: child["parent2"]["name"]) do |par|
-        par.email = child["parent2"]["email"]
-        par.phone_number = child["parent2"]["phone"]
-        par.job = child["job"]
-        par.address = child["address"]
+      parent2 = Parent.find_or_create_by(name: child["parent2"]["name"].strip) do |par|
+        par.email = child["parent2"]["email"].strip
+        par.phone_number = child["parent2"]["phone"].strip
+        par.job = child["job"].strip
+        par.address = child["address"].strip
       end
 
       c.parents << parent2 unless c.parents.map(&:id).include?(parent2.id)

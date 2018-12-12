@@ -7,9 +7,8 @@ class SaleableDay < ApplicationRecord
 
   self.per_page = 10
 
-  # TODO
-  # has_one :child
-  #
+  validates :date, presence: true
+
   def start_time
     date
   end
