@@ -4,8 +4,9 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Your day has been purchased</h1>
-    <p></p>
+		<h1><%= @seller.name %>'s day has been purchased.</h1>
+		<p>Purchasing child: <%= @buyer.name %></p>
+		<p>Date: <%= @day.date.to_formatted_s(:long) %></p>
     <p>
       To login to the site, just follow this link: <%= @url %>.
     </p>

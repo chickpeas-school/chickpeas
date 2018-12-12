@@ -5,7 +5,8 @@
   </head>
   <body>
     <h1>A New Day is up for sale</h1>
-    <p></p>
+		<p><%= @seller.name %> has a day for sale</p>
+		<p>Date: <%= @day.date.to_formatted_s(:long) %></p>
     <p>
       To login to the site, just follow this link: <%= @url %>.
     </p>
