@@ -11,7 +11,7 @@ class SaleableDayMailer < ApplicationMailer
     parent_emails = @seller.parents.map(&:email)
 
     if Rails.env.development?
-      parent_emails = ["brad@prudl.com"]
+      parent_emails = [FALLBACK_DEV_EMAIL]
     end
 
     unless parent_emails.empty?

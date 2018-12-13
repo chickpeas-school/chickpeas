@@ -1,1 +1,2 @@
-SALE_DISTRIBUTION_EMAIL = ENV['RAILS_ENV'].eql?("production") ? "parents@chickpeas.org" : "brad@prudl.com"
+FALLBACK_DEV_EMAIL = ENV['FALLBACK_DEV_EMAIL']
+SALE_DISTRIBUTION_EMAIL = ENV['RAILS_ENV'].eql?("production") ? "parents@chickpeas.org" : FALLBACK_DEV_EMAIL
