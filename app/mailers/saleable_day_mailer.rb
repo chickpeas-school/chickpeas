@@ -10,8 +10,8 @@ class SaleableDayMailer < ApplicationMailer
 
     parent_emails = @seller.parents.map(&:email)
 
-    if Rails.env.development?
-      parent_emails = [FALLBACK_DEV_EMAIL]
+    if EmailConfig.saleable_days_in_test_mode?
+      parent_emails = [EmailConfig.saleable_distribution_email]
     end
 
     unless parent_emails.empty?
@@ -24,6 +24,6 @@ class SaleableDayMailer < ApplicationMailer
     @seller = @day.seller
     @url = "https://chickpeas.herokuapp.com/days"
 
-    mail(to: SALE_DISTRIBUTION_EMAIL, subject: "A New Day is Up For Sale")
+    mail(to: EmailConfig.saleable_distribution_email, subject: "A New Day is Up For Sale")
   end
 end
