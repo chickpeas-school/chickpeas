@@ -9,6 +9,6 @@ class CreateEmailConfigs < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    EmailConfig.create(email: "brad@prudl.com", genre: "saleable_days", description: "The default email config", testing: true)
+    EmailConfig.create(email: ENV['SALEABLE_DAY_EMAIL'], genre: "saleable_days", description: "The default email config", testing: true)
   end
 end
