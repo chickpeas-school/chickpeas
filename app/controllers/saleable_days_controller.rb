@@ -54,6 +54,14 @@ class SaleableDaysController < ApplicationController
     end
   end
 
+  def destroy
+    SaleableDay.find(params[:id]).destroy
+    respond_to do |format|
+      format.html { redirect_to saleable_days_path, notice: 'Day was successfully removed' }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def day_params

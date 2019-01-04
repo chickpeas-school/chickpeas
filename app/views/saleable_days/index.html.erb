@@ -19,7 +19,8 @@
 		<% else %>
 			<div>
 				<% if current_user.children.include?(day.seller) %>
-					<a class="disabled"><%= day.seller.name %></a>
+					<% delete_confirm = "Do you want to remove a day for sale?" %>
+					<%= "#{day.seller.name} - " %><%= link_to "remove", saleable_day_path(day), method: :delete, data: { confirm: delete_confirm } %>
 				<% else %>
 					<%= link_to day.seller.name, edit_saleable_day_path(day) %>
 				<% end %>
