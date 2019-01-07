@@ -1,4 +1,4 @@
-$(function() {
+$(document).on("ready turbolinks:load", function() {
   $("#mass-message-select-all").on("click", function() {
     var elem = $(this);
 
