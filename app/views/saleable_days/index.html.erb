@@ -42,6 +42,7 @@
 			<th scope="col">Month</th>
 			<th scope="col">Day</th>
 			<th scope="col">Child's Name</th>
+			<th scope="col">Buyer's Name</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -51,6 +52,11 @@
 				<td><%= day.date.strftime("%B") %></td>
 				<td><%= day.date.day %><%= day.date.day.ordinal %></td>
 				<td><%= day.seller.name %></td>
+				<td>
+					<% if day.sold? %>
+						<%= day.buyer.name %>
+					<% end %>
+				</td>
 				<td>
 					<% if day.sold? %>
 						<button type="button" class="btn btn-primary disabled">Sold</button>
