@@ -4,7 +4,7 @@ class SaleableDay < ApplicationRecord
 
   scope :for_sale, -> { where(buyer: nil) }
   scope :sold, -> { where.not(buyer: nil) }
-  scope :upcoming, -> { where("date > ?", Time.now) }
+  scope :upcoming, -> { where("date > ?", Time.now).order(date: :asc) }
 
   self.per_page = 10
 
