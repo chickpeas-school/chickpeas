@@ -3,7 +3,10 @@
 <div class="row justify-content-md-center" style="padding-top:30px;padding-bottom:50px;">
 	<% current_user.current_children.each do |child| %>
 		<div class="col col-lg-4">
-			<%= link_to "Sell Day from #{child.name}", new_saleable_day_path(child_id: child.id), class: "btn btn-primary btn-block" %>
+			<%= link_to "Sell Day from #{child.name}", days_new_sell_path(child_id: child.id), class: "btn btn-primary btn-block" %>
+		</div>
+		<div class="col col-lg-4">
+			<%= link_to "Buy Day for #{child.name}", days_new_buy_path(child_id: child.id), class: "btn btn-primary btn-block" %>
 		</div>
 	<% end %>
 </div>
@@ -18,11 +21,15 @@
 			</div>
 		<% else %>
 			<div>
-				<% if current_user.children.include?(day.seller) %>
+				<% if current_user.has_buyer_or_seller?(day) %>
 					<% delete_confirm = "Do you want to remove a day for sale?" %>
-					<%= "#{day.seller.name} - " %><%= link_to "remove", saleable_day_path(day), method: :delete, data: { confirm: delete_confirm } %>
+					<%= "#{day.buyer_or_sellers_name} - " %><%= link_to "remove", saleable_day_path(day), method: :delete, data: { confirm: delete_confirm } %>
 				<% else %>
-					<%= link_to day.seller.name, edit_saleable_day_path(day) %>
+					<% if day.seller %>
+						<%= link_to day.seller.name, buy_day_edit_path(day) %>
+					<% else %>
+						<%= link_to day.buyer.name, sell_day_edit_path(day) %>
+					<% end %>
 				<% end %>
 			</div>
 		<% end %>
@@ -51,9 +58,13 @@
 			<tr>
 				<td><%= day.date.strftime("%B") %></td>
 				<td><%= day.date.day %><%= day.date.day.ordinal %></td>
-				<td><%= day.seller.name %></td>
 				<td>
-					<% if day.sold? %>
+					<% if day.seller %>
+						<%= day.seller.name %>
+					<% end %>
+				</td>
+				<td>
+					<% if day.buyer %>
 						<%= day.buyer.name %>
 					<% end %>
 				</td>
@@ -61,9 +72,17 @@
 					<% if day.sold? %>
 						<button type="button" class="btn btn-primary disabled">Sold</button>
 					<% else %>
-						<% unless current_user.children.include?(day.seller) %>
-							<%= link_to edit_saleable_day_path(day) do %>
-								<button type="button" class="btn btn-primary">Buy</button>
+						<% if day.buyer.nil? %>
+							<% unless current_user.children.include?(day.seller) %>
+								<%= link_to buy_day_edit_path(day) do %>
+									<button type="button" class="btn btn-primary">Buy</button>
+								<% end %>
+							<% end %>
+						<% else %>
+							<% unless current_user.children.include?(day.buyer) %>
+								<%= link_to sell_day_edit_path(day) do %>
+									<button type="button" class="btn btn-primary">Sell</button>
+								<% end %>
 							<% end %>
 						<% end %>
 					<% end %>

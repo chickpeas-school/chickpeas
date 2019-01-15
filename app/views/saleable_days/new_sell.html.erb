@@ -1,0 +1,25 @@
+<h3>Sell Day</h3>
+
+<%= form_for @day, url: days_sell_path, local: true do |form| %>
+  <% if @day.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@day.errors.count, "error") %> prohibited this day from being saved:</h2>
+
+      <ul>
+      <% @day.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+	<% end %>
+
+	<div class="form-group field">
+		<%= form.label :date %>
+		<%= form.date_field :date %>
+	</div>
+
+	<%= form.hidden_field :seller_id, value: @child.id %>
+
+	<%= form.submit "Sell Day", class: "btn btn-primary" %>
+	<%= link_to "Cancel", :back, class: "btn btn-secondary" %>
+<% end %>

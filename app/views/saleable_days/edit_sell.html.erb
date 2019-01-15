@@ -1,0 +1,23 @@
+<h4>Sell Day - <%= @day.date.strftime("%B") %> <%= @day.date.day %><%= @day.date.day.ordinal %></h4>
+<%= form_for @day, url: sell_day_path, local: true do |form| %>
+  <% if @day.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@day.errors.count, "error") %> prohibited this day from being saved:</h2>
+
+      <ul>
+      <% @day.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+	<% end %>
+
+	<div class="form-group">
+		<% children_content_tags = @children.map { |c| [c.name, c.id] } %>
+		<%= form.label 'Choose the Child/Buyer' %>
+		<%= form.select :seller_id, children_content_tags, {}, class: "form-control" %>
+	</div>
+
+	<%= form.submit "Sell Day", class: "btn btn-primary" %>
+	<%= link_to "Cancel", saleable_days_path, class: "btn btn-secondary" %>
+<% end %>

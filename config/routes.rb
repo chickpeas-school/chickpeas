@@ -2,6 +2,18 @@ Rails.application.routes.draw do
   resources :announcements
   resources :saleable_days, path: 'days'
 
+  get "/days/new/sell",                   to: "saleable_days#new", defaults: { type: :sell }
+  post "/days/sell",                      to: "saleable_days#create", defaults: { type: :sell }
+  get "/days/:id/edit/sell", to: "saleable_days#edit", defaults: { type: :sell }, as: "sell_day_edit"
+  put "/days/:id/sell",      to: "saleable_days#update", defaults: { type: :sell }, as: "sell_day"
+  patch "/days/:id/sell",    to: "saleable_days#update", defaults: { type: :sell }
+
+  get "/days/new/buy",                    to: "saleable_days#new", defaults: { type: :buy }
+  post "/days/buy",                       to: "saleable_days#create", defaults: { type: :buy }
+  get "/days/:id/edit/buy",  to: "saleable_days#edit", defaults: { type: :buy }, as: "buy_day_edit"
+  put "/days/:id/buy",       to: "saleable_days#update", defaults: { type: :buy }, as: "buy_day"
+  patch "/days/:id/buy",     to: "saleable_days#update", defaults: { type: :buy }
+
   resources :children, only: [:index, :show]
 
   resources :parents do

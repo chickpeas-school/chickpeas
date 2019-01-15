@@ -9,17 +9,44 @@ class SaleableDaysController < ApplicationController
   def new
     @day = SaleableDay.new
     @child = Child.find(params[:child_id])
+
+    if params[:type] == :sell
+      template = "new_sell"
+    elsif params[:type] == :buy
+      template = "new_buy"
+    else
+      template = "new"
+    end
+
+    render template
   end
 
   def edit
     @day = SaleableDay.find(params[:id])
-    @children = current_user.children.all.reject { |ch| ch.id == @day.seller.id }
+    buyer_seller_id = params[:type] == :sell ? @day.buyer.id : @day.seller.id
+    @children = current_user.children.all.reject { |ch| ch.id == buyer_seller_id }
+
+    if params[:type] == :sell
+      template = "edit_sell"
+    elsif params[:type] == :buy
+      template = "edit_buy"
+    else
+      template = "edit"
+    end
+
+    render template
   end
 
   def update
     @day = SaleableDay.find(params[:id])
-    @child = Child.find(params[:saleable_day][:child_id])
-    @day.buyer = @child
+    child_id = params[:type] == :buy ? params[:saleable_day][:buyer_id] : params[:saleable_day][:seller_id]
+    @child = Child.find(child_id)
+
+    if params[:type] == :buy
+      @day.buyer = @child
+    else
+      @day.seller = @child
+    end
 
     respond_to do |format|
       if @day.save
@@ -37,8 +64,14 @@ class SaleableDaysController < ApplicationController
 
   def create
     @day = SaleableDay.new(day_params)
-    @child = Child.find(params[:saleable_day][:child_id])
-    @day.seller = @child
+    child_id = params[:type] == :buy ? params[:saleable_day][:buyer_id] : params[:saleable_day][:seller_id]
+    @child = Child.find(child_id)
+
+    if params[:type] == :buy
+      @day.buyer = @child
+    else
+      @day.seller = @child
+    end
 
     respond_to do |format|
       if @day.save

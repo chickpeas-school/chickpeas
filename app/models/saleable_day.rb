@@ -1,6 +1,6 @@
 class SaleableDay < ApplicationRecord
   belongs_to :buyer, class_name: "Child", optional: true
-  belongs_to :seller, class_name: "Child"
+  belongs_to :seller, class_name: "Child", optional: true
 
   scope :for_sale, -> { where(buyer: nil) }
   scope :sold, -> { where.not(buyer: nil) }
@@ -15,6 +15,11 @@ class SaleableDay < ApplicationRecord
   end
 
   def sold?
-    !buyer.nil?
+    seller && buyer
+  end
+
+  def buyer_or_sellers_name
+    return seller.name if seller
+    buyer.name
   end
 end
