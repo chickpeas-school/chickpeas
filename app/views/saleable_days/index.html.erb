@@ -17,18 +17,18 @@
 	<% days.each do |day| %>
 		<% if day.sold? %>
 			<div>
-				<small><%= link_to "#{day.seller.name} (SOLD)", "", class: "disabled" %></small>
+				<small><%= link_to "#{day.seller.name} (SOLD)", "", class: "badge badge-light" %></small>
 			</div>
 		<% else %>
 			<div>
 				<% if current_user.has_buyer_or_seller?(day) %>
-					<% delete_confirm = "Do you want to remove a day for sale?" %>
-					<%= "#{day.buyer_or_sellers_name} - " %><%= link_to "remove", saleable_day_path(day), method: :delete, data: { confirm: delete_confirm } %>
+					<% delete_confirm = "Do you want to remove a day #{day.seller ? 'for sale' : 'to buy'}?" %>
+					<%= link_to "#{day.buyer_or_sellers_name} | Remove", saleable_day_path(day), class: "badge badge-dark", method: :delete, data: { confirm: delete_confirm } %>
 				<% else %>
 					<% if day.seller %>
-						<%= link_to day.seller.name, buy_day_edit_path(day) %>
+						<%= link_to "#{day.seller.name} | Buy", buy_day_edit_path(day), class: "badge badge-primary" %>
 					<% else %>
-						<%= link_to day.buyer.name, sell_day_edit_path(day) %>
+						<%= link_to "#{day.buyer.name} | Sell", sell_day_edit_path(day), class: "badge badge-secondary" %>
 					<% end %>
 				<% end %>
 			</div>
