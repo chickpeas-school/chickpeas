@@ -19,7 +19,8 @@
 				<div class="card text-center">
 					<div class="card-body">
 						<h5 class="card-title"><%= child.name %></h5>
-						<%= link_to 'Sell Days', new_saleable_day_path(child_id: child), class: "card-link btn btn-light" %>
+						<%= link_to 'Sell Day', days_new_sell_path(child_id: child.id), class: "card-link btn btn-light" %>
+						<%= link_to 'Buy Day', days_new_buy_path(child_id: child.id), class: "card-link btn btn-light" %>
 						<%= link_to 'View Child', child_path(child), class: "card-link btn btn-primary" %>
 					</div>
 				</div>
