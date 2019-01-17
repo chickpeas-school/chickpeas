@@ -16,7 +16,7 @@
 # Example for live:
 # ```
 # {
-#   email: "parents@chickpeas.com",
+#   email: "parents@chickpeas.org",
 #   testing: false,
 #   genre: "saleable_days",
 #   description: "default production email config"
