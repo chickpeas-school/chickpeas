@@ -87,6 +87,42 @@ class SaleableDaysController < ApplicationController
     end
   end
 
+  def destroy_buyer
+    @day = SaleableDay.find(params[:id])
+
+    @day.buyer = nil
+
+    if @day.save
+      respond_to do |format|
+        format.html { redirect_to saleable_days_path, notice: "Buyer was successfully removed" }
+        format.json { render :show, status: :ok, location: @day }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to saleable_days_path, notice: "Unable to remove the Buyer" }
+        format.json { render json: @day.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy_seller
+    @day = SaleableDay.find(params[:id])
+
+    @day.seller = nil
+
+    if @day.save
+      respond_to do |format|
+        format.html { redirect_to saleable_days_path, notice: "Seller was successfully removed" }
+        format.json { render :show, status: :ok, location: @day }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to saleable_days_path, notice: "Unable to remove the Seller" }
+        format.json { render json: @day.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     SaleableDay.find(params[:id]).destroy
     respond_to do |format|
