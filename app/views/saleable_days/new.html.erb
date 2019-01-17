@@ -15,7 +15,7 @@
 
 	<div class="form-group field">
 		<%= form.label :date %>
-		<%= form.date_field :date %>
+		<%= datepicker_input form, :date %>
 	</div>
 
 	<%= form.hidden_field :child_id, value: @child.id %>

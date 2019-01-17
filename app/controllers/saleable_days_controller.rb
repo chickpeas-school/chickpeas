@@ -23,7 +23,7 @@ class SaleableDaysController < ApplicationController
 
   def edit
     @day = SaleableDay.find(params[:id])
-    buyer_seller_id = params[:type] == :sell ? @day.buyer.id : @day.seller.id
+    buyer_seller_id = is_buy? ? @day.seller.id : @day.buyer.id
     @children = current_user.children.all.reject { |ch| ch.id == buyer_seller_id }
 
     if params[:type] == :sell
@@ -39,10 +39,10 @@ class SaleableDaysController < ApplicationController
 
   def update
     @day = SaleableDay.find(params[:id])
-    child_id = params[:type] == :buy ? params[:saleable_day][:buyer_id] : params[:saleable_day][:seller_id]
+    child_id = is_buy? ? params[:saleable_day][:buyer_id] : params[:saleable_day][:seller_id]
     @child = Child.find(child_id)
 
-    if params[:type] == :buy
+    if is_buy?
       @day.buyer = @child
     else
       @day.seller = @child
@@ -64,10 +64,10 @@ class SaleableDaysController < ApplicationController
 
   def create
     @day = SaleableDay.new(day_params)
-    child_id = params[:type] == :buy ? params[:saleable_day][:buyer_id] : params[:saleable_day][:seller_id]
+    child_id = is_buy? ? params[:saleable_day][:buyer_id] : params[:saleable_day][:seller_id]
     @child = Child.find(child_id)
 
-    if params[:type] == :buy
+    if is_buy?
       @day.buyer = @child
     else
       @day.seller = @child
@@ -75,13 +75,13 @@ class SaleableDaysController < ApplicationController
 
     respond_to do |format|
       if @day.save
-
         SaleableDayMailer.with(day: @day).day_put_on_sale.deliver_later
 
         format.html { redirect_to saleable_days_path, notice: 'Day was successfully recorded for sale' }
         format.json { render :show, status: :created, location: @child.parent }
       else
-        format.html { render :new }
+        template = is_buy? ? 'new_buy' : 'new_sell'
+        format.html { render template }
         format.json { render json: @day.errors, status: :unprocessable_entity }
       end
     end
@@ -139,5 +139,9 @@ class SaleableDaysController < ApplicationController
 
   def logged_in?
     redirect_to login_path unless super
+  end
+
+  def is_buy?
+    params[:type] == :buy
   end
 end

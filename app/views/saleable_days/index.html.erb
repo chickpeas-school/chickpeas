@@ -18,9 +18,9 @@
 		<% if day.sold? %>
 			<div>
 				<% if current_user.has_buyer?(day.buyer) %>
-					<%= link_to "#{day.seller.name} (SOLD) | Undo", buy_day_path(day), class: "badge badge-light", method: :delete, data: { confirm: "Are you sure that you want to undo the sale?" } %>
+					<%= link_to "#{day.seller.name} (SOLD) | Undo", buy_day_path(day), class: "badge badge-light", method: :delete, data: { confirm: "Are you sure that you want to undo the purchase?" } %>
 				<% elsif current_user.has_seller?(day.seller) %>
-					<%= link_to "#{day.seller.name} (SOLD) | Undo", sell_day_path(day), class: "badge badge-light", method: :delete, data: { confirm: "Are you sure that you want to undo the purchase?" } %>
+					<%= link_to "#{day.seller.name} (SOLD) | Undo", sell_day_path(day), class: "badge badge-light", method: :delete, data: { confirm: "Are you sure that you want to undo the sale?" } %>
 				<% else %>
 					<%= link_to "#{day.seller.name} (SOLD)", "", class: "badge badge-light" %>
 				<% end %>
@@ -97,9 +97,9 @@
 				<td>
 					<% if day.sold? %>
 						<% if current_user.has_buyer?(day.buyer) %>
-							<%= link_to "Undo", buy_day_path(day), class: "btn btn-secondary", method: :delete, data: { confirm: "Are you sure that you want to undo the sale?" } %>
+							<%= link_to "Undo", buy_day_path(day), class: "btn btn-secondary", method: :delete, data: { confirm: "Are you sure that you want to undo the purchase?" } %>
 						<% elsif current_user.has_seller?(day.seller) %>
-							<%= link_to "Undo", sell_day_path(day), class: "btn btn-secondary", method: :delete, data: { confirm: "Are you sure that you want to undo the purchase?" } %>
+							<%= link_to "Undo", sell_day_path(day), class: "btn btn-secondary", method: :delete, data: { confirm: "Are you sure that you want to undo the sale?" } %>
 						<% else %>
 							<%= link_to "(SOLD)", "", class: "btn btn-primary disabled" %>
 						<% end %>

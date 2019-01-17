@@ -43,6 +43,7 @@ gem "simple_calendar", "~> 2.0"
 gem 'will_paginate', '~> 3.1.0'
 gem 'phone', "~> 1.2.3"
 gem 'aws-sdk-sns', "~> 1"
+gem 'bootstrap-datepicker-rails'
 
 gem 'activerecord-session_store'
 

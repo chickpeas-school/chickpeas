@@ -1,6 +1,6 @@
 <h3>Sell Day</h3>
 
-<%= form_for @day, url: days_sell_path, local: true do |form| %>
+<%= form_for @day, url: days_sell_path, local: false do |form| %>
   <% if @day.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@day.errors.count, "error") %> prohibited this day from being saved:</h2>
@@ -15,7 +15,7 @@
 
 	<div class="form-group field">
 		<%= form.label :date %>
-		<%= form.date_field :date %>
+		<%= datepicker_input form, :date %>
 	</div>
 
 	<%= form.hidden_field :seller_id, value: @child.id %>
