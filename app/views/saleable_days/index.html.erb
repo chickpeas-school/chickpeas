@@ -1,15 +1,15 @@
 <h3>Calendar</h3>
 
-<div class="row justify-content-md-center" style="padding-top:30px;padding-bottom:50px;">
-	<% current_user.current_children.each do |child| %>
+<% current_user.children.each do |child| %>
+	<div class="row justify-content-md-center" style="padding-top:30px;padding-bottom:50px;">
 		<div class="col col-lg-4">
 			<%= link_to "Sell Day from #{child.name}", days_new_sell_path(child_id: child.id), class: "btn btn-primary btn-block" %>
 		</div>
 		<div class="col col-lg-4">
 			<%= link_to "Buy Day for #{child.name}", days_new_buy_path(child_id: child.id), class: "btn btn-primary btn-block" %>
 		</div>
-	<% end %>
-</div>
+	</div>
+<% end %>
 
 <%= month_calendar events: @days do |date, days| %>
 	<%= date.day %>
