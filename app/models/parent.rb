@@ -1,6 +1,15 @@
 class Parent < ApplicationRecord
   has_and_belongs_to_many :children
   has_and_belongs_to_many :mass_messages
+  has_many :email_configs
+
+  def saleable_days_email_config
+    email_configs.where(genre: SALEABLE_DAYS_GENRE).limit(1).first
+  end
+
+  def saleable_days_email
+    saleable_days_email_config.active? ? saleable_days_email_config.email : nil
+  end
 
   def admin?
     is_admin

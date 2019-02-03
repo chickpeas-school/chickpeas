@@ -8,9 +8,13 @@ class SaleableDayMailer < ApplicationMailer
     @buyer = @day.buyer
     @url = "https://chickpeas.herokuapp.com/days"
 
-    parent_emails = @seller.parents.map(&:email)
+    parents = @seller.parents
 
-    if EmailConfig.saleable_days_in_test_mode?
+    parents.map do |parent|
+      parent.saleable_days_email
+    end.compact
+
+    if !EmailConfig.saleable_days_active?
       parent_emails = [EmailConfig.saleable_distribution_email]
     end
 

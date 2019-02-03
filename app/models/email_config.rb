@@ -1,15 +1,15 @@
-# EmailConfig was built with the intention of testing the SaleableDayMailer in `production` without
+# EmailConfig was built with the intention of active the SaleableDayMailer in `production` without
 # email everyone within the system. There are 2 primary pieces of information that are relevant:
-# 1. Is it for `testing`?
+# 1. Is it for `active`?
 # 2. What is the main distribution email address for annoucing that a day has been put up for sale? At present, parents@chickpeas.org is an email group address that distributes emails to all the parents.
 #
-# Example for testing:
+# Example for active:
 # ```
 # {
 #   email: "brad@prudl.com",
-#   testing: true,
+#   active: false,
 #   genre: "saleable_days",
-#   description: "default testing email config"
+#   description: "default active email config"
 # }
 # ```
 #
@@ -17,7 +17,7 @@
 # ```
 # {
 #   email: "parents@chickpeas.org",
-#   testing: false,
+#   active: true,
 #   genre: "saleable_days",
 #   description: "default production email config"
 # }
@@ -26,11 +26,13 @@
 SALEABLE_DAYS_GENRE = "saleable_days"
 
 class EmailConfig < ApplicationRecord
+  belongs_to :parent, optional: true
 
-  scope :saleable_days_config, -> { where(genre: SALEABLE_DAYS_GENRE).limit(1).first }
+  scope :app_configs, ->{ where(parent_id: nil) }
+  scope :saleable_days_config, ->{ app_configs.where(genre: SALEABLE_DAYS_GENRE).limit(1).first }
 
-  def self.saleable_days_in_test_mode?
-    self.saleable_days_config && self.saleable_days_config.testing
+  def self.saleable_days_active?
+    self.saleable_days_config && self.saleable_days_config.active
   end
 
   # saleable_distribution_email checks to see if the EmailConfig.saleable_days_config in the DB

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_14_043252) do
+ActiveRecord::Schema.define(version: 2019_02_03_031851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,9 +49,11 @@ ActiveRecord::Schema.define(version: 2018_12_14_043252) do
     t.string "email"
     t.string "genre"
     t.text "description"
-    t.boolean "testing"
+    t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "parent_id"
+    t.index ["parent_id"], name: "index_email_configs_on_parent_id"
   end
 
   create_table "mass_messages", force: :cascade do |t|
@@ -106,4 +108,5 @@ ActiveRecord::Schema.define(version: 2018_12_14_043252) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "email_configs", "parents"
 end
