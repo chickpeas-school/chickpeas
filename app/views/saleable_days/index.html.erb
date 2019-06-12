@@ -14,7 +14,7 @@
 <%= month_calendar events: @days do |date, days| %>
 	<%= date.day %>
 
-	<% days.each do |day| %>
+	<% days.sort_by(&:created_at).each do |day| %>
 		<% if day.sold? %>
 			<div>
 				<% if current_user.has_buyer?(day.buyer) %>
