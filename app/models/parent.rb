@@ -3,6 +3,22 @@ class Parent < ApplicationRecord
   has_and_belongs_to_many :mass_messages
   has_many :email_configs
 
+  class << self
+    def all_current
+      includes(:email_configs).joins(children: :years).where("years.current_year = true").uniq
+    end
+
+    def all_current_except(ids_to_exclude)
+      where.not(id: ids_to_exclude).all_current
+    end
+
+    def all_current_with_active_email_except(ids_to_exclude)
+      all_current_except(ids_to_exclude).map do |parent|
+        parent.email_configs.find { |ec| ec.genre.eql?(SALEABLE_DAYS_GENRE) }&.email
+      end.uniq.compact
+    end
+  end
+
   def saleable_days_email_config
     email_configs.where(genre: SALEABLE_DAYS_GENRE).limit(1).first
   end
@@ -15,8 +31,12 @@ class Parent < ApplicationRecord
     is_admin
   end
 
+  def current_year?
+    current_children.present?
+  end
+
   def current_children
-    children.select { |c| c.years.map(&:current_year).include?(true) }
+    children.select { |c| c.current_year? }
   end
 
   def formatted_phone_number

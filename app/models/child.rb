@@ -12,4 +12,8 @@ class Child < ApplicationRecord
   def days_bought?
     !days_bought.empty?
   end
+
+  def current_year?
+    years.map(&:current_year).include?(true)
+  end
 end

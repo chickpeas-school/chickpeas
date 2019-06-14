@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Someone is seeking to buy a Day</h1>
+		<p><%= @buyer.name %> has a day for sale</p>
+		<p>Date: <%= @day.date.to_formatted_s(:long) %></p>
+    <p>
+      To login to the site, just follow this link: <%= @url %>.
+    </p>
+  </body>
+</html>

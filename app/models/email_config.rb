@@ -24,20 +24,21 @@
 # ```
 #
 SALEABLE_DAYS_GENRE = "saleable_days"
+SALEABLE_DAYS_FALLBACK_GENRE = "saleable_days_fallback"
 
 class EmailConfig < ApplicationRecord
   belongs_to :parent, optional: true
 
   scope :app_configs, ->{ where(parent_id: nil) }
-  scope :saleable_days_config, ->{ app_configs.where(genre: SALEABLE_DAYS_GENRE).limit(1).first }
+  scope :saleable_days_fallback_config, ->{ app_configs.where(genre: SALEABLE_DAYS_FALLBACK_GENRE).limit(1).first }
 
-  def self.saleable_days_active?
-    self.saleable_days_config && self.saleable_days_config.active
+  def self.saleable_days_fallback_active?
+    self.saleable_days_fallback_config && self.saleable_days_fallback_config.active
   end
 
-  # saleable_distribution_email checks to see if the EmailConfig.saleable_days_config in the DB
+  # saleable_distribution_email checks to see if the EmailConfig.saleable_days_fallback_config in the DB
   # has an email address. If it does have an email address, then that is the email address returned
-  def self.saleable_distribution_email
-    self.saleable_days_config && self.saleable_days_config.email
+  def self.saleable_distribution_fallback_email
+    self.saleable_days_fallback_config && self.saleable_days_fallback_config.email
   end
 end
