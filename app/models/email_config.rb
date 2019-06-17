@@ -41,4 +41,15 @@ class EmailConfig < ApplicationRecord
   def self.saleable_distribution_fallback_email
     self.saleable_days_fallback_config && self.saleable_days_fallback_config.email
   end
+
+  def display_genre
+    case genre
+    when SALEABLE_DAYS_GENRE
+      return "Days for Sale"
+    when SALEABLE_DAYS_FALLBACK_GENRE
+      return "Fallback Email Configuration"
+    else
+      return genre
+    end
+  end
 end

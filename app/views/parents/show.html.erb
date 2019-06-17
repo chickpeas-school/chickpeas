@@ -1,21 +1,18 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @parent.email %>
-</p>
+<h2><%= @parent.name %></h2>
 
 <p>
-  <strong>Name:</strong>
-  <%= @parent.name %>
+  <strong>Login Email:</strong>
+  <%= @parent.email %>
 </p>
 
 <div style="padding-top:20px;padding-bottom:20px;"></div>
 <% if @parent.children.exists? %>
-	<h3>Children</h3>
+	<h4>Children</h4>
 	<div class="row">
 		<% @parent.children.each_with_index do |child, i| %>
-			<div class="col-sm-4">
+			<div class="col-sm-6">
 				<div class="card text-center">
 					<div class="card-body">
 						<h5 class="card-title"><%= child.name %></h5>
@@ -29,6 +26,29 @@
 	</div>
 <% end %>
 
+<div style="padding-top:20px;padding-bottom:20px;"></div>
+<% if !@parent.email_configs.empty? %>
+	<h4>Email Notification Configuration</h4>
+	<% @parent.email_configs.each do |ec| %>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="card text-center">
+					<div class="card-body">
+						<h5 class="card-title">
+							<%= ec.display_genre %> Notifications
+						</h5>
+						<p>
+							Email: <%= ec.email %><br>
+							Notifications Turned On? <%= ec.active %>
+						</p>
+						<%= link_to 'Edit', edit_parent_email_config_path(parent_id: @parent.id, id: ec.id), class: "card-link btn btn-light" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	<% end %>
+<% end %>
+
 <% if current_user && admin_user? %>
 	<br />
 	<br />
@@ -36,3 +56,4 @@
 	<%= link_to 'Edit', edit_parent_path(@parent) %> |
 	<%= link_to 'Back', parents_path %>
 <% end %>
+

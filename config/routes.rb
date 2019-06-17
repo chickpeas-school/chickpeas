@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   resources :parents do
     resources :children, only: [:new, :create, :destroy], controller: "parents/children"
+    resources :email_configs, only: [:edit, :update], controller: "parents/email_configs"
   end
 
   resources :years do

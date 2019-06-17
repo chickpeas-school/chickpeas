@@ -14,7 +14,8 @@ class Parent < ApplicationRecord
 
     def all_current_with_active_email_except(ids_to_exclude)
       all_current_except(ids_to_exclude).map do |parent|
-        parent.email_configs.find { |ec| ec.genre.eql?(SALEABLE_DAYS_GENRE) }&.email
+        ec = parent.email_configs.find { |ec| ec.genre.eql?(SALEABLE_DAYS_GENRE) }
+        ec.active? ? ec.email : nil
       end.uniq.compact
     end
   end
