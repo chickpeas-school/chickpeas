@@ -1,7 +1,9 @@
 class Parent < ApplicationRecord
   has_and_belongs_to_many :children
   has_and_belongs_to_many :mass_messages
-  has_many :email_configs
+  has_many :email_configs, dependent: :delete_all
+
+  after_create :create_default_email_config
 
   class << self
     def all_current
@@ -20,8 +22,16 @@ class Parent < ApplicationRecord
     end
   end
 
+  def saleable_days_email_config_query
+    email_configs.where(genre: SALEABLE_DAYS_GENRE)
+  end
+
+  def saleable_days_email_config_exists?
+    saleable_days_email_config_query.exists?
+  end
+
   def saleable_days_email_config
-    email_configs.where(genre: SALEABLE_DAYS_GENRE).limit(1).first
+    saleable_days_email_config_query.limit(1).first
   end
 
   def saleable_days_email
@@ -60,5 +70,16 @@ class Parent < ApplicationRecord
 
   def has_child?(child)
     children.include?(child)
+  end
+
+  def create_default_email_config
+    unless saleable_days_email_config_exists?
+      email_configs.create(
+        email: email,
+        active: true,
+        genre: SALEABLE_DAYS_GENRE,
+        description: "default parent email config"
+      )
+    end
   end
 end
