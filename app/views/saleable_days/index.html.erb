@@ -1,6 +1,6 @@
 <h3>Calendar</h3>
 
-<% current_user.children.each do |child| %>
+<% current_user.eligible_children.each do |child| %>
 	<div class="row justify-content-md-center" style="padding-top:30px;padding-bottom:50px;">
 		<div class="col col-lg-4">
 			<%= link_to "Sell Day from #{child.name}", days_new_sell_path(child_id: child.id), class: "btn btn-primary btn-block" %>

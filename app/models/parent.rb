@@ -47,7 +47,11 @@ class Parent < ApplicationRecord
   end
 
   def current_children
-    children.select { |c| c.current_year? }
+    children.select(&:current_year?)
+  end
+
+  def eligible_children
+    children.select(&:eligible?)
   end
 
   def formatted_phone_number

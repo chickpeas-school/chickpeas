@@ -24,7 +24,7 @@ class SaleableDaysController < ApplicationController
   def edit
     @day = SaleableDay.find(params[:id])
     buyer_seller_id = is_buy? ? @day.seller.id : @day.buyer.id
-    @children = current_user.children.all.reject { |ch| ch.id == buyer_seller_id }
+    @children = current_user.eligible_children.reject { |ch| ch.id == buyer_seller_id }
 
     if params[:type] == :sell
       template = "edit_sell"
