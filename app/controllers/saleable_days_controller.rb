@@ -38,7 +38,7 @@ class SaleableDaysController < ApplicationController
   end
 
   def update
-    @day = SaleableDay.find_first_on_date(params[:id])
+    @day = SaleableDay.find_first_available_on_date(params[:id])
     child_id = is_buy? ? params[:saleable_day][:buyer_id] : params[:saleable_day][:seller_id]
     @child = Child.find(child_id)
 

@@ -11,8 +11,8 @@ class SaleableDay < ApplicationRecord
   validates :date, presence: true
 
   class << self
-    def find_first_on_date(saleable_day_id)
-      days = SaleableDay.all
+    def find_first_available_on_date(saleable_day_id)
+      days = SaleableDay.where(buyer_id: nil)
       saleable_day = days.find(saleable_day_id)
       saleable_day_date = saleable_day.date.to_date
 
