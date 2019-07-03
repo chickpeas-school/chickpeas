@@ -1,24 +1,35 @@
-# README
+# Chickpeas Platform
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Installation
 
-Things you may want to cover:
+The platform is installed for local development with a standard Github workflow:
+```
+~$> git clone git@github.com:chickpeas-school/chickpeas.git
+~$> cd chickpeas
+```
 
-* Ruby version
+## Local Development
 
-* System dependencies
+#### Database
 
-* Configuration
+The platform depends on Postgres both for `development` and `production`. 
 
-* Database creation
+[PostgreSQL Download](https://www.postgresql.org/download/)
 
-* Database initialization
+You will need to make sure that PostgreSQL is configured properly. The following is the standard configuration for the platform:
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+`config/database.yml`
+```
+default: &default
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+  username: "chickpeas"
+  password: "password"
+```
+Please, change the default setting to what makes the most sense for your use case. In the case above, you will need to make sure that PostgreSQL has a `chickpeas` User account with the `password` above. 
+```
+~$> su - postgres
+~$> createuser --interactive --pwprompt
+```
+For more information about the user creation process in PostgreSQL, refer to the [PostgreSQL documentation](https://www.postgresql.org/docs/9.3/app-createuser.html).
