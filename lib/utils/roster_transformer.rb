@@ -4,6 +4,14 @@ class RosterTransformer
 
   attr_reader :filepath
 
+  ##
+  #
+  # Headers
+  #
+  # You may need to change the follow constants to make sure they match the headers in the incoming CSV.
+  # As can be seen in the `data` method, `headers` are parsed in the `CSV.read()` call.
+  #
+  ##
   CHILDS_NAME = "CHILD’S NAME"
   DAYS = "DAYS"
   DOB = "DOB"
@@ -11,6 +19,16 @@ class RosterTransformer
   PARENT2 = "PARENT/GUARDIAN 2 NAME, EMAIL, PHONE"
   CHICKPEAS_JOB = "CHICKPEAS JOB"
   ADDRESS = "ADDRESS"
+
+  class << self
+    def run(input_filepath, output_filepath)
+      transformer = self.new(input_filepath)
+
+      File.open(output_filepath, "w") do |f|
+        f.puts transformer.rows.to_json
+      end
+    end
+  end
 
   def initialize(filepath)
     @filepath = filepath
