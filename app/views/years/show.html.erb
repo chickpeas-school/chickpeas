@@ -1,20 +1,47 @@
 <p id="notice"><%= notice %></p>
+<div class="row pb-5">
+  <div class="col-sm">
+    <%= link_to 'Back', years_path %>
+  </div>
+  <div class="col-sm">
+    <%= link_to 'Edit Year', edit_year_path(@year) %>
+  </div>
+</div>
 
-<p>
-  <strong>Year:</strong>
-  <%= @year.value %>
-</p>
+<div class="row pb-5">
+  <div class="col-sm">
+    <h1><%= @year.value %></h1>
+  </div>
 
-<p>
-  <strong>Is Current Year?</strong>
-  <%= @year.current_year %>
-</p>
+  <div class="col-sm">
+    <strong>Is Current Year?</strong>
+    <%= @year.current_year %>
+  </div>
+</div>
 
-<hr />
-<p><strong>Children</strong></p>
-<% @year.children.each do |child| %>
-	<p><%= link_to child.name, child_path(child) %></p>
-<% end %>
-
-<%= link_to 'Edit', edit_year_path(@year) %> |
-<%= link_to 'Back', years_path %>
+<div class="row">
+  <div class="col-sm">
+    <h3>Children</h3>
+  </div>
+  <div class="col-sm">
+    <%= link_to 'Add Child', new_year_child_path(@year) %>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Parent 1</th>
+      <th scope="col">Parent 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @year.children.each do |child| %>
+      <tr>
+        <td><%= link_to child.name, child_path(child) %></td>
+        <td><%= child.parents.first.name %></td>
+        <td><%= child.parents.last.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

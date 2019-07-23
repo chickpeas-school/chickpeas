@@ -1,16 +1,19 @@
 class Years::ChildrenController < ApplicationController
   before_action :set_year, only: [:new, :create, :destroy]
+  helper ChildrenHelper
 
   def new
-    @children = Child.all.reject { |c| c.years.map(&:value).include?(@year.value) }
+    @child = Child.new
   end
 
   def create
+    binding.pry
+
+    date_of_birth = Date.parse(child_params[:dob]).strftime("%m/%d/%Y")
+
     child = Child.find(params[:child_id])
 
-    unless @year.children.map(&:id).include?(child.id)
-      @year.children << child
-    end
+    @year.children << child
 
     respond_to do |format|
       format.html { redirect_to years_path, notice: "Child was successfully added to: #{@year.value}"}
@@ -32,5 +35,9 @@ class Years::ChildrenController < ApplicationController
 
   def set_year
     @year = Year.find(params[:year_id])
+  end
+
+  def child_params
+    params[:child].permit(:name, :dob)
   end
 end

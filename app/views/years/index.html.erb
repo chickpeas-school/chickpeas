@@ -16,7 +16,6 @@
       <tr>
         <td><%= year.value %></td>
         <td><%= year.current_year %></td>
-				<td><%= link_to 'Add Child', new_year_child_path(year) %></td>
         <td><%= link_to 'Show', year_path(year) %></td>
         <td><%= link_to 'Edit', edit_year_path(year) %></td>
         <td><%= link_to 'Destroy', year_path(year), method: :delete, data: { confirm: 'Are you sure?' } %></td>
