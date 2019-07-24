@@ -1,5 +1,9 @@
 <h1>Add a Child to <%= @year.value %></h1>
 
-<%= render 'form', year: @year, child: @child %>
+<%= render 'returning_child_form', year: @year, children: @existing_children %>
 
-<%= link_to 'Back', years_path %>
+<hr />
+
+<%= render 'new_child_form', year: @year, child: @child %>
+
+<%= link_to 'Back', :back %>

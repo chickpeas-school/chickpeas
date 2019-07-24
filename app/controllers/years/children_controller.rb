@@ -3,20 +3,30 @@ class Years::ChildrenController < ApplicationController
   helper ChildrenHelper
 
   def new
+    @existing_children = Child.all
     @child = Child.new
   end
 
   def create
-    binding.pry
+    if params[:type] == :returning
+      child = Child.find(params[:child_id])
+    else
+      date_of_birth = Date.parse(child_params[:dob]).strftime("%m/%d/%Y")
+      days = helpers.day_checkboxes_to_string(child_params.slice(*helpers.day_symbols).to_h)
 
-    date_of_birth = Date.parse(child_params[:dob]).strftime("%m/%d/%Y")
+      child = Child.create(
+        name: child_params[:name],
+        dob: date_of_birth,
+        days: days
+      )
+    end
 
-    child = Child.find(params[:child_id])
-
-    @year.children << child
+    unless @year.children.map(&:id).include?(child.id)
+      @year.children << child
+    end
 
     respond_to do |format|
-      format.html { redirect_to years_path, notice: "Child was successfully added to: #{@year.value}"}
+      format.html { redirect_to year_path(@year), notice: "Child was successfully added to: #{@year.value}"}
       format.json { render :show, status: :created, location: @year }
     end
   end
@@ -38,6 +48,6 @@ class Years::ChildrenController < ApplicationController
   end
 
   def child_params
-    params[:child].permit(:name, :dob)
+    params[:child].permit(:name, :dob, :days_monday, :days_tuesday, :days_wednesday, :days_thursday, :days_friday)
   end
 end

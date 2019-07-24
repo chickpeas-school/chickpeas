@@ -16,7 +16,9 @@ Rails.application.routes.draw do
   patch "/days/:id/buy",     to: "saleable_days#update", defaults: { type: :buy }
   delete "/days/:id/buy",    to: "saleable_days#destroy_buyer"
 
-  resources :children, only: [:index, :show]
+  resources :children, only: [:index, :show] do
+    resources :parents, only: [:new, :create, :destroy], controller: "children/parents"
+  end
 
   resources :parents do
     resources :children, only: [:new, :create, :destroy], controller: "parents/children"
@@ -24,7 +26,10 @@ Rails.application.routes.draw do
   end
 
   resources :years do
-    resources :children, only: [:new, :create, :destroy], controller: "years/children"
+    post "/children/returning", to: "years/children#create", defaults: { type: :returning }
+    post "/children/new", to: "years/children#create", defaults: { type: :new }
+
+    resources :children, only: [:new, :update, :destroy], controller: "years/children"
   end
 
   resources :mass_messages, only: [:new, :create, :show]

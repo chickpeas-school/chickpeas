@@ -1,0 +1,10 @@
+<%= form_tag("/years/#{year.id}/children/returning", method: "post", local: true) do %>
+  <% child_options = children.map { |child| ["#{child.name}", child.id] } %>
+	<div class="field">
+		<%= select_tag(:child_id, options_for_select(child_options)) %>
+	</div>
+
+	<div class="actions">
+		<%= submit_tag %>
+	</div>
+<% end %>
