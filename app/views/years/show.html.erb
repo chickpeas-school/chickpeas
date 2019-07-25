@@ -38,17 +38,35 @@
   <tbody>
     <% @year.children.each do |child| %>
       <tr>
-        <td><%= link_to child.name, child_path(child) %></td>
+        <td>
+          <%= link_to child.name, child_path(child) %>
+          <p>
+            <%= child.dob %>
+            <br /><%= child.days %>
+          </p>
+        </td>
         <td>
           <% if child.parents.empty? %>
             <%= link_to 'Add Parent', new_child_parent_path(child) %>
           <% else %>
-            <%= child.parents.first.name %>
+            <%= link_to child.parents.first.name, parent_path(child.parents.first) %>
+            <p>
+              <%= child.parents.first.job %>
+              <br /><%= child.parents.first.email %>
+              <br /><%= child.parents.first.phone_number %>
+              <br /><%= child.parents.first.address %>
+            </p>
           <% end %>
         </td>
         <td>
           <% if child.parents.size > 1 %>
-            <%= child.parents.last.name %>
+            <%= link_to child.parents.last.name, parent_path(child.parents.last) %>
+            <p>
+              <%= child.parents.last.job %>
+              <br /><%= child.parents.last.email %>
+              <br /><%= child.parents.last.phone_number %>
+              <br /><%= child.parents.last.address %>
+            </p>
           <% else %>
             <%= link_to 'Add Parent', new_child_parent_path(child) %>
           <% end %>

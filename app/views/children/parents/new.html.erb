@@ -1,0 +1,30 @@
+<%= form_tag("/children/#{@child.id}/parents", method: "post", local: true) do %>
+  <div class="form-group">
+    <%= label_tag :name %>
+    <%= text_field_tag :name, "", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :email %>
+    <%= text_field_tag :email, "", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :phone_number %>
+    <%= text_field_tag :phone_number, "", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :job %>
+    <%= text_field_tag :job, "", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :address %>
+    <%= text_field_tag :address, "", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= submit_tag "Create Parent", class: "btn btn-primary" %>
+  </div>
+<% end %>
