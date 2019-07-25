@@ -33,6 +33,7 @@
       <th scope="col">Name</th>
       <th scope="col">Parent 1</th>
       <th scope="col">Parent 2</th>
+      <th colspan="5"></th>
     </tr>
   </thead>
   <tbody>
@@ -70,6 +71,9 @@
           <% else %>
             <%= link_to 'Add Parent', new_child_parent_path(child) %>
           <% end %>
+        </td>
+        <td>
+          <%= link_to 'Remove Child', year_child_path(@year, child), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-light" %>
         </td>
       </tr>
     <% end %>

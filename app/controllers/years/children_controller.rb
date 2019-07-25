@@ -32,11 +32,11 @@ class Years::ChildrenController < ApplicationController
   end
 
   def destroy
-    child = Child.find(params[:child_id])
+    child = Child.find(params[:id])
     @year.children = @year.children.reject { |c| c.id.eql?(child.id) }
 
     respond_to do |format|
-      format.html { redirect_to years_path, notice: "Child was successfully delete from: #{@year.value}"}
+      format.html { redirect_to year_path(@year), notice: "Child was successfully delete from: #{@year.value}"}
       format.json { head :no_content }
     end
   end
