@@ -12,15 +12,30 @@
   <% end %>
 
   <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= form.label :email %>
     <%= form.text_field :email, class: "form-control" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "form-control" %>
+    <%= form.label :phone_number %>
+    <%= form.text_field :phone_number, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :address %>
+    <%= form.text_field :address, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :job %>
+    <%= form.text_field :job, class: "form-control" %>
   </div>
 
 	<%= form.submit "Save", class: "btn btn-primary" %>
-	<%= link_to 'Back', parents_path, class: "btn btn-secondary" %>
+	<%= link_to 'Back', :back, class: "btn btn-secondary" %>
 <% end %>
