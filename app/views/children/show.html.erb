@@ -1,4 +1,25 @@
-<p>Name: <%= @child.name %></p>
+<h4><%= @child.name %></h4>
+<p>
+  Date of Birth: <%= @child.dob %>
+  <br />Weekdays at Chickpeas: <%= @child.days %>
+</p>
+
+<hr />
+
+<h5>Parents</h5>
+<div class="row">
+  <% @child.parents.each do |parent| %>
+    <div class="col-md-6">
+      <%= link_to parent.name, parent_path(parent) %>
+      <p>
+        <%= parent.job %>
+        <br /><%= parent.email %>
+        <br /><%= parent.phone_number %>
+        <br /><%= parent.address %>
+      </p>
+    </div>
+  <% end %>
+</div>
 
 <% if @child.days_for_sale? %>
 	<p><b>Days on Sale</b></p>
