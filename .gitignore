@@ -31,3 +31,6 @@
 /config/master.key
 
 .env
+
+.todo
+db/roster.json

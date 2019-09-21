@@ -8,10 +8,10 @@ class SaleableDayMailer < ApplicationMailer
     @buyer = @day.buyer
     @url = "https://chickpeas.herokuapp.com/days"
 
-    parent_emails = @seller.parents.map(&:saleable_days_email).compact
-
+    # email to both buyers and sellers
+    transaction_emails = transaction_notification_emails(@buyer, @seller)
     unless parent_emails.empty?
-      send_mail(to: parent_emails, subject: "One of #{@seller.name}'s Days has been Purchased")
+      send_mail(to: transaction_emails, subject: "One of #{@seller.name}'s Days has been Purchased")
     end
   end
 
@@ -21,10 +21,11 @@ class SaleableDayMailer < ApplicationMailer
     @buyer = @day.buyer
     @url = "https://chickpeas.herokuapp.com/days"
 
-    parent_emails = @buyer.parents.map(&:saleable_days_email).compact
+    # email to both buyers and sellers
+    transaction_emails = transaction_notification_emails(@buyer, @seller)
 
     unless parent_emails.empty?
-      send_mail(to: parent_emails, subject: "A Day has been Sold to #{@buyer.name}")
+      send_mail(to: transaction_emails, subject: "A Day has been Sold to #{@buyer.name}")
     end
   end
 
@@ -36,6 +37,7 @@ class SaleableDayMailer < ApplicationMailer
     @url = "https://chickpeas.herokuapp.com/days"
 
     buyer_parent_ids = @buyer.parents.map(&:id)
+    # email to all parents other than those posting
     emails = Parent.all_current_with_active_email_except(buyer_parent_ids)
     send_mail(to: emails, subject: "Someone wants to buy a Chickpeas Day")
   end
@@ -48,17 +50,25 @@ class SaleableDayMailer < ApplicationMailer
     @url = "https://chickpeas.herokuapp.com/days"
 
     seller_parent_ids = @seller.parents.map(&:id)
+    # email to all parents other than those posting
     emails = Parent.all_current_with_active_email_except(seller_parent_ids)
     send_mail(to: emails, subject: "A New Chickpeas Day is Up For Sale")
   end
 
   private
 
+  # i guess this will deliver email to a testing email if one is set,
+  # or will send to the list of emails passed, if testing email is not active
   def send_mail(opts)
-    if !EmailConfig.saleable_days_fallback_active?
-      mail(opts)
-    else
-      mail(opts.merge(to: [EmailConfig.saleable_distribution_fallback_email]))
+    if EmailConfig.saleable_days_fallback_active?
+      return mail(opts.merge(to: [EmailConfig.saleable_distribution_fallback_email]))
     end
+    mail(opts)
+  end
+
+  def transaction_notification_emails(buyer, seller)
+    seller_emails = seller.parents.map(&:saleable_days_email).compact
+    buyer_emails = buyer.parents.map(&:saleable_days_email).compact
+    seller_emails.concat(buyer_emails)
   end
 end

@@ -29,17 +29,26 @@ SALEABLE_DAYS_FALLBACK_GENRE = "saleable_days_fallback"
 class EmailConfig < ApplicationRecord
   belongs_to :parent, optional: true
 
-  scope :app_configs, ->{ where(parent_id: nil) }
-  scope :saleable_days_fallback_config, ->{ app_configs.where(genre: SALEABLE_DAYS_FALLBACK_GENRE).limit(1).first }
+  # this was, for some reason, returning all email configs. rather than look into why it was breaking
+  # I just went with a simpler and less performant solution, in the interest of just getting things working
+
+  # scope :app_configs, ->{ where(parent_id: nil) }
+  # scope :saleable_days_fallback_config, ->{ where(parent_id: nil, genre: SALEABLE_DAYS_FALLBACK_GENRE).limit(1).first || nil }
+
+  def self.saleable_days_fallback_config
+    self.where(parent_id: nil, genre: SALEABLE_DAYS_FALLBACK_GENRE).limit(1).first
+  end
 
   def self.saleable_days_fallback_active?
-    self.saleable_days_fallback_config && self.saleable_days_fallback_config.active
+    fallback = saleable_days_fallback_config
+    fallback && fallback.active
   end
 
   # saleable_distribution_email checks to see if the EmailConfig.saleable_days_fallback_config in the DB
   # has an email address. If it does have an email address, then that is the email address returned
   def self.saleable_distribution_fallback_email
-    self.saleable_days_fallback_config && self.saleable_days_fallback_config.email
+    fallback = saleable_days_fallback_config
+    fallback && fallback.email
   end
 
   def display_genre

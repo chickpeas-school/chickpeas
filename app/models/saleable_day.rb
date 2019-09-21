@@ -11,9 +11,10 @@ class SaleableDay < ApplicationRecord
   validates :date, presence: true
 
   class << self
+    # gives priority to child who put date up for sale / buy first
+    # this could be a starting point for working on priority refinement
     def find_first_available_on_date(saleable_day_id)
-      days = SaleableDay.where(buyer_id: nil)
-      saleable_day = days.find(saleable_day_id)
+      saleable_day = SaleableDay.find(saleable_day_id)
       saleable_day_date = saleable_day.date.to_date
 
       other_days = days.reject { |d| d.id.eql?(saleable_day_id) }
