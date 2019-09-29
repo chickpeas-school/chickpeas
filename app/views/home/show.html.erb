@@ -1,8 +1,10 @@
 <div style="margin-top:40px;">
 	<div class="jumbotron">
-		<h1 class="display-4">Welcome to the Chickpeas Homepage</h1>
+		<h1 class="display-4">Welcome to the Chickpeas Buy / Sell Site</h1>
 		<% if !logged_in? %>
-			<p class="lead">Please Login to Buy and Sell Days</p>
+			<p class="lead text-center text-info">
+				<%= link_to "Please Login to Buy and Sell Days", login_path %>
+			</p>
 		<% end %>
 	</div>
 	<% if @announcements.present? %>
