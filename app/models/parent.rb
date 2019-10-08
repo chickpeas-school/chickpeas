@@ -3,6 +3,8 @@ class Parent < ApplicationRecord
   has_and_belongs_to_many :mass_messages
   has_many :email_configs, dependent: :delete_all
 
+  before_update :downcase_email
+  before_create :downcase_email
   after_create :create_default_email_config
 
   class << self
@@ -74,6 +76,12 @@ class Parent < ApplicationRecord
 
   def has_child?(child)
     children.include?(child)
+  end
+
+  def downcase_email
+    if !self.email.nil? 
+      self.email = self.email.downcase
+    end
   end
 
   def create_default_email_config

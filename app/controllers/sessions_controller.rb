@@ -3,7 +3,9 @@ class SessionsController < ApplicationController
   def new; end
 
   def create
-    parent = Parent.find_by(email: params[:parent_email])
+    # legacy emails are not all lower case. I decided to do this to remove case sensitivity rather than
+    # running a migration but maybe I'll do that later
+    parent = Parent.where('lower(email) = ?', params[:parent_email].downcase).first
 
     respond_to do |format|
       if parent.nil?
