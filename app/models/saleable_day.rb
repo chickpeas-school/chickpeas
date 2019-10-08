@@ -17,7 +17,7 @@ class SaleableDay < ApplicationRecord
       saleable_day = SaleableDay.find(saleable_day_id)
       saleable_day_date = saleable_day.date.to_date
 
-      other_days = days.reject { |d| d.id.eql?(saleable_day_id) }
+      other_days = SaleableDay.where.not(id: saleable_day_id)
       other_days.select { |d| saleable_day_date == d.date.to_date }.sort_by(&:created_at).first || saleable_day
     end
   end
