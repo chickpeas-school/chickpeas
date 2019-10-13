@@ -3,7 +3,7 @@ class SaleableDay < ApplicationRecord
   belongs_to :seller, class_name: "Child", optional: true
 
   scope :for_sale, -> { where(buyer: nil) }
-  scope :sold, -> { where.not(buyer: nil) }
+  scope :sold, -> { where.not(buyer: nil, seller: nil) }
   scope :upcoming, -> { where("date > ?", (Time.now - 2.day)).order(date: :asc, created_at: :asc) }
 
   self.per_page = 10

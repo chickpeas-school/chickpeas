@@ -4,6 +4,11 @@ class SaleableDaysController < ApplicationController
   def index
     @days = SaleableDay.all
     @list_days = SaleableDay.upcoming.paginate(page: params[:page])
+    if current_user.is_admin? 
+      @sold_days = SaleableDay.sold.paginate(page: params[:admin_page]).order(date: :desc)
+    else
+      @sold_days = nil
+    end
   end
 
   def new
@@ -51,9 +56,9 @@ class SaleableDaysController < ApplicationController
     respond_to do |format|
       if @day.save
         if is_buy?
-          SaleableDayMailer.with(day: @day).day_purchased.deliver_later
+          SaleableDayMailer.with(day: @day).day_purchased.deliver
         else
-          SaleableDayMailer.with(day: @day).day_sold.deliver_later
+          SaleableDayMailer.with(day: @day).day_sold.deliver
         end
 
         format.html { redirect_to saleable_days_path, notice: 'Day has been bought' }
@@ -77,11 +82,12 @@ class SaleableDaysController < ApplicationController
     end
 
     respond_to do |format|
+      # i have a hunch that deliver_later is not working... think about re-enabling later - dws
       if @day.save
         if is_buy?
-          SaleableDayMailer.with(day: @day).day_posted_for_purchase.deliver_later
+          SaleableDayMailer.with(day: @day).day_posted_for_purchase.deliver
         else
-          SaleableDayMailer.with(day: @day).day_put_on_sale.deliver_later
+          SaleableDayMailer.with(day: @day).day_put_on_sale.deliver
         end
 
         format.html { redirect_to saleable_days_path, notice: 'Day was successfully recorded for sale' }
