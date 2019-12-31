@@ -59,6 +59,7 @@ class SaleableDayMailer < ApplicationMailer
 
   # i guess this will deliver email to a testing email if one is set,
   # or will send to the list of emails passed, if testing email is not active
+  # using mailcatcher, this is less important
   def send_mail(opts)
     if EmailConfig.saleable_days_fallback_active?
       return mail(opts.merge(to: [EmailConfig.saleable_distribution_fallback_email]))

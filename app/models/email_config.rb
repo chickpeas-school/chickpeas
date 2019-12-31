@@ -1,7 +1,8 @@
 # EmailConfig was built with the intention of active the SaleableDayMailer in `production` without
 # email everyone within the system. There are 2 primary pieces of information that are relevant:
 # 1. Is it for `active`?
-# 2. What is the main distribution email address for annoucing that a day has been put up for sale? At present, parents@chickpeas.org is an email group address that distributes emails to all the parents.
+# 2. What is the main distribution email address for annoucing that a day has been put up for sale? 
+#    At present, parents@chickpeas.org is an email group address that distributes emails to all the parents.
 #
 # Example for active:
 # ```

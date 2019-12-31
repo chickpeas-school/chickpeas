@@ -56,9 +56,9 @@ class SaleableDaysController < ApplicationController
     respond_to do |format|
       if @day.save
         if is_buy?
-          SaleableDayMailer.with(day: @day).day_purchased.deliver
+          SaleableDayMailer.with(day: @day).day_purchased.deliver_later
         else
-          SaleableDayMailer.with(day: @day).day_sold.deliver
+          SaleableDayMailer.with(day: @day).day_sold.deliver_later
         end
 
         format.html { redirect_to saleable_days_path, notice: 'Day has been bought' }
@@ -85,9 +85,9 @@ class SaleableDaysController < ApplicationController
       # i have a hunch that deliver_later is not working... think about re-enabling later - dws
       if @day.save
         if is_buy?
-          SaleableDayMailer.with(day: @day).day_posted_for_purchase.deliver
+          SaleableDayMailer.with(day: @day).day_posted_for_purchase.deliver_later
         else
-          SaleableDayMailer.with(day: @day).day_put_on_sale.deliver
+          SaleableDayMailer.with(day: @day).day_put_on_sale.deliver_later
         end
 
         format.html { redirect_to saleable_days_path, notice: 'Day was successfully recorded for sale' }
