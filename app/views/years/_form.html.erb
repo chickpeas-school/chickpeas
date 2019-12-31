@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= label_tag :year_value %>
-    <%= number_field_tag :value, in: 2015..2030, step: 1 %>
+    <%= number_field :year, :value, in: 2015..2030, step: 1 %>
   </div>
 
   <div class="field">
     <%= label_tag 'Is Current Year?' %>
-		<%= check_box_tag :current_year %>
+		<%= check_box :year, :current_year %>
 	</div>
 
 	<div class="actions">
