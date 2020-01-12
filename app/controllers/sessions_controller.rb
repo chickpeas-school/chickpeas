@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     respond_to do |format|
       if parent.nil?
         flash.alert = 'Unable to find email address; please ensure that you entered it correctly.'
-        format.html { redirect_to login_path }
+        format.html { redirect_to new_parent_session_path }
         format.json { render json: { message: 'Unable to find email address' }, status: :error, code: 404 }
       else
         session[:parent_id] = parent.id

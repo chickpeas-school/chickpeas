@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :parents, controllers: { omniauth_callbacks: 'parents/omniauth_callbacks' }
+
   resources :announcements
   resources :saleable_days, path: 'days', only: [:index, :show, :destroy]
 
@@ -15,7 +17,14 @@ Rails.application.routes.draw do
   put "/days/:id/buy",       to: "saleable_days#update", defaults: { type: :buy }, as: "buy_day"
   patch "/days/:id/buy",     to: "saleable_days#update", defaults: { type: :buy }
   delete "/days/:id/buy",    to: "saleable_days#destroy_buyer"
-
+  
+  # allow users to change their password
+  # see https://github.com/heartcombo/devise/wiki/How-To%3A-Allow-users-to-edit-their-password
+  as :parent do
+    get 'parents/edit',        to: 'devise/registrations#edit', :as => 'edit_parent_registration'    
+    put 'parents',             to: 'devise/registrations#update', :as => 'parent_registration'            
+  end
+  
   resources :children, only: [:index, :show] do
     resources :parents, only: [:new, :create, :destroy], controller: "children/parents"
   end
@@ -23,6 +32,8 @@ Rails.application.routes.draw do
   resources :parents do
     resources :children, only: [:new, :create, :destroy], controller: "parents/children"
     resources :email_configs, only: [:edit, :update], controller: "parents/email_configs"
+    # in case we want to add external google users for oauth later
+    # get "/parents/:id/link", to: "parents#link"
   end
 
   resources :years do
@@ -33,11 +44,6 @@ Rails.application.routes.draw do
   end
 
   resources :mass_messages, only: [:new, :create, :show]
-
-  resources :sessions, only: [:create]
-
-  get '/login', to: "sessions#new"
-  delete '/logout', to: "sessions#destroy"
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #

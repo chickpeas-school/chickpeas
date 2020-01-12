@@ -33,13 +33,13 @@
             <button type="button" class="btn btn-primary disabled">Sold</button>
           <% else %>
             <% if day.buyer.nil? %>
-              <% unless current_user.has_seller?(day.seller) %>
+              <% unless current_parent.has_seller?(day.seller) %>
                 <%= link_to buy_day_edit_path(day) do %>
                   <button type="button" class="btn btn-primary">Buy</button>
                 <% end %>
               <% end %>
             <% else %>
-              <% unless current_user.has_buyer?(day.buyer) %>
+              <% unless current_parent.has_buyer?(day.buyer) %>
                 <%= link_to sell_day_edit_path(day) do %>
                   <button type="button" class="btn btn-primary">Sell</button>
                 <% end %>
@@ -50,15 +50,15 @@
         <% if interactive %>
           <td>
             <% if day.sold? %>
-              <% if current_user.has_buyer?(day.buyer) %>
+              <% if current_parent.has_buyer?(day.buyer) %>
                 <%= link_to "Undo", buy_day_path(day), class: "btn btn-secondary", method: :delete, data: { confirm: "Are you sure that you want to undo the purchase?" } %>
-              <% elsif current_user.has_seller?(day.seller) %>
+              <% elsif current_parent.has_seller?(day.seller) %>
                 <%= link_to "Undo", sell_day_path(day), class: "btn btn-secondary", method: :delete, data: { confirm: "Are you sure that you want to undo the sale?" } %>
               <% else %>
                 <%= link_to "(SOLD)", "", class: "btn btn-primary disabled" %>
               <% end %>
             <% else %>
-              <% if current_user.has_buyer_or_seller?(day) %>
+              <% if current_parent.has_buyer_or_seller?(day) %>
                 <% delete_confirm = "Do you want to remove a day #{day.seller ? 'for sale' : 'to buy'}?" %>
                 <%= link_to "Remove", saleable_day_path(day), class: "btn btn-danger", method: :delete, data: { confirm: delete_confirm } %>
               <% end %>

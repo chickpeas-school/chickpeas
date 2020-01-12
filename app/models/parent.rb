@@ -1,4 +1,9 @@
 class Parent < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable,
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: %i[google_oauth2]
   has_and_belongs_to_many :children
   has_and_belongs_to_many :mass_messages
   has_many :email_configs, dependent: :delete_all
@@ -21,6 +26,15 @@ class Parent < ApplicationRecord
         ec = parent.email_configs.find { |ec| ec.genre.eql?(SALEABLE_DAYS_GENRE) }
         ec.active? ? ec.email : nil
       end.uniq.compact
+    end
+
+    # run fter successful Google 0auth to find which chickpeas user to log in.
+    # if we allow emails outside of the Chickpeas organization to authenticate
+    # via 0auth (we would need for Google to verify our app), we can find via
+    # a `google_oauth_email` param, in addition (we'd need to add this
+    # (see commented line in omniauth migration))
+    def from_omniauth(auth)
+      parent_from_omniauth = where(email: auth.info.email).first
     end
   end
 

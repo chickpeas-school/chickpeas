@@ -1,6 +1,6 @@
 <h3>Calendar</h3>
 
-<% current_user.eligible_children.each do |child| %>
+<% current_parent.eligible_children.each do |child| %>
 	<div class="row justify-content-md-center" style="padding-top:30px;padding-bottom:50px;">
 		<div class="col col-lg-4">
 			<%= link_to "Sell Day from #{child.name}", days_new_sell_path(child_id: child.id), class: "btn btn-primary btn-block" %>
@@ -17,9 +17,9 @@
 	<% days.sort_by(&:created_at).each do |day| %>
 		<% if day.sold? %>
 			<div>
-				<% if current_user.has_buyer?(day.buyer) %>
+				<% if current_parent.has_buyer?(day.buyer) %>
 					<%= link_to "#{day.seller.name} (SOLD) | Undo", buy_day_path(day), class: "badge badge-light", method: :delete, data: { confirm: "Are you sure that you want to undo the purchase?" } %>
-				<% elsif current_user.has_seller?(day.seller) %>
+				<% elsif current_parent.has_seller?(day.seller) %>
 					<%= link_to "#{day.seller.name} (SOLD) | Undo", sell_day_path(day), class: "badge badge-light", method: :delete, data: { confirm: "Are you sure that you want to undo the sale?" } %>
 				<% else %>
 					<%= link_to "#{day.seller.name} (SOLD)", "", class: "badge badge-light" %>
@@ -27,7 +27,7 @@
 			</div>
 		<% else %>
 			<div>
-				<% if current_user.has_buyer_or_seller?(day) %>
+				<% if current_parent.has_buyer_or_seller?(day) %>
 					<% delete_confirm = "Do you want to remove a day #{day.seller ? 'for sale' : 'to buy'}?" %>
 					<%= link_to "#{day.buyer_or_sellers_name} | Remove", saleable_day_path(day), class: "badge badge-dark", method: :delete, data: { confirm: delete_confirm } %>
 				<% else %>
@@ -48,6 +48,6 @@
 
 <%= render partial: "list", object: @list_days, locals: { pagination_param: 'page', title: 'List of Upcoming Days', interactive: true } %>
 
-<% if current_user.is_admin? %>
+<% if current_parent.is_admin? %>
 	<%= render partial: "list", object: @sold_days, locals: { pagination_param: 'admin_page', title: 'All Sold Days', interactive: false } %>
 <% end %>

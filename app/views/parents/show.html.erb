@@ -7,6 +7,10 @@
   <%= @parent.email %>
 </p>
 
+<p>
+	<%= link_to 'Change Password', edit_parent_registration_path, class: "card-link btn btn-light" %>
+</p>
+
 <div style="padding-top:20px;padding-bottom:20px;"></div>
 <% if @parent.eligible_children.present? %>
 	<h4>Children</h4>
@@ -49,7 +53,7 @@
 	<% end %>
 <% end %>
 
-<% if current_user && admin_user? %>
+<% if current_parent && admin_user? %>
 	<br />
 	<br />
 	<%= link_to 'Add Child', new_parent_child_path(@parent) %> |

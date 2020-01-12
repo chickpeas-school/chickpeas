@@ -61,6 +61,21 @@ class ParentsController < ApplicationController
     end
   end
 
+  # a start, in case we want to allow external oauth users later
+  # # PATCH/PUT /parents/1/link
+  # def link
+  #   @parent = Parent.where(email: params[:email]).first
+  #   if @parent.nil?
+  #     render "link" @email: params[:email], @error: 'Email Not Found'
+  #   end
+  #   @parent.google_oauth_email = params[:email]
+  #   @parent.provider = params[:auth].provider, 
+  #   @parent.uid = params[:auth].uid
+  #   @parent.save
+  #   sign_in_and_redirect @parent, event: :authentication #this will throw if @parent is not activated
+  #   set_flash_message(:notice, :success, kind: "Google Login") if is_navigational_format?
+  # end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_parent
@@ -69,6 +84,6 @@ class ParentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def parent_params
-      params.require(:parent).permit(:email, :name)
+      params.require(:parent).permit(:email, :name, :auth)
     end
 end

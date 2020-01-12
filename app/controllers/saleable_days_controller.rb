@@ -4,7 +4,7 @@ class SaleableDaysController < ApplicationController
   def index
     @days = SaleableDay.all
     @list_days = SaleableDay.upcoming.paginate(page: params[:page])
-    if current_user.is_admin? 
+    if current_parent.is_admin? 
       @sold_days = SaleableDay.sold.paginate(page: params[:admin_page]).order(date: :desc)
     else
       @sold_days = nil
@@ -29,7 +29,7 @@ class SaleableDaysController < ApplicationController
   def edit
     @day = SaleableDay.find(params[:id])
     buyer_seller_id = is_buy? ? @day.seller.id : @day.buyer.id
-    @children = current_user.eligible_children.reject { |ch| ch.id == buyer_seller_id }
+    @children = current_parent.eligible_children.reject { |ch| ch.id == buyer_seller_id }
 
     if params[:type] == :sell
       template = "edit_sell"
@@ -151,7 +151,7 @@ class SaleableDaysController < ApplicationController
   end
 
   def logged_in?
-    redirect_to login_path unless super
+    redirect_to new_parent_session_path unless super
   end
 
   def is_buy?

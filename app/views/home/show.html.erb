@@ -1,9 +1,9 @@
 <div style="margin-top:40px;">
 	<div class="jumbotron">
 		<h1 class="display-4">Welcome to the Chickpeas Buy / Sell Site</h1>
-		<% if !logged_in? %>
+		<% if !parent_signed_in? %>
 			<p class="lead text-center text-info">
-				<%= link_to "Please Login to Buy and Sell Days", login_path %>
+				<%= link_to "Please Login to Buy and Sell Days", new_parent_session_path %>
 			</p>
 		<% end %>
 	</div>
@@ -13,7 +13,7 @@
 				<h3>Announcements</h3>
 			</div>
 			<div class="col-sm-2">
-				<% if logged_in? %>
+				<% if parent_signed_in? %>
 					<%= link_to new_announcement_path do %>
 						New Announcement
 					<% end %>
