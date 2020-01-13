@@ -16,7 +16,6 @@ class Parents::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def failure
-    binding.pry
     redirect_to root_path
   end
 end
