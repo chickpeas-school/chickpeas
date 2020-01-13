@@ -151,7 +151,7 @@ class SaleableDaysController < ApplicationController
   end
 
   def logged_in?
-    redirect_to new_parent_session_path unless super
+    redirect_to new_parent_session_path unless parent_signed_in?
   end
 
   def is_buy?
