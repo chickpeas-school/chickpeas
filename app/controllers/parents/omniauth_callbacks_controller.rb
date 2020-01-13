@@ -10,8 +10,8 @@ class Parents::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @parent, event: :authentication #this will throw if @parent is not activated
       set_flash_message(:notice, :success, kind: "Google Login") if is_navigational_format?
     else
-      auth_error = 'Google Auth Failed. Email provided does not match any existing Chickpeas parent emails'
-      redirect_to new_parent_session_path error: auth_error
+      flash.alert = 'Google Auth Failed. Email provided does not match any existing Chickpeas parent emails'
+      redirect_to new_parent_session_path
     end
   end
 
