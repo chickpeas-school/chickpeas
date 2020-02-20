@@ -10,7 +10,7 @@ class SaleableDayMailer < ApplicationMailer
 
     # email to both buyers and sellers
     transaction_emails = transaction_notification_emails(@buyer, @seller)
-    unless parent_emails.empty?
+    unless transaction_emails.empty?
       send_mail(to: transaction_emails, subject: "One of #{@seller.name}'s Days has been Purchased")
     end
   end
@@ -24,7 +24,7 @@ class SaleableDayMailer < ApplicationMailer
     # email to both buyers and sellers
     transaction_emails = transaction_notification_emails(@buyer, @seller)
 
-    unless parent_emails.empty?
+    unless transaction_emails.empty?
       send_mail(to: transaction_emails, subject: "A Day has been Sold to #{@buyer.name}")
     end
   end
